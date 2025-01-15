@@ -3,13 +3,23 @@
   "version": "5.12.1",
   "description": "React Native plugin for AutoIdent Mobile SDK",
   "main": "build/index.js",
+  "module": "build/index.js",
   "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "app.plugin.js",
+    "plugin/build",
+    "android",
+    "ios",
+    "expo-module.config.json"
+  ],
   "scripts": {
-    "build": "expo-module build",
+    "build": "tsc --build && expo-module build",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "test": "expo-module test",
     "prepare": "expo-module prepare",
+    "postinstall": "npm run build",
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "xed example/ios",
@@ -28,13 +38,19 @@
   "license": "MIT",
   "homepage": "https://www.idnow.io/",
   "devDependencies": {
-    "@types/react": "^18.0.25",
-    "expo-module-scripts": "^3.5.2",
-    "expo-modules-core": "^1.12.19"
+    "@types/react": "^18.0.25"
+  },
+  "dependencies": {
+    "expo-module-scripts": "^4.0.3",
+    "expo-modules-core": "^2.1.3",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "expo": "*",
     "react": "*",
     "react-native": "*"
-  }
+  },
+  "trustedDependencies": [
+    "@idnow/react-autoident"
+  ]
 }

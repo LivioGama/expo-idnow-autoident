@@ -11,13 +11,12 @@ public class RNIdNowLibraryModule: Module {
       Function("startIdent") { (token: String) -> String in
         DispatchQueue.main.async {
             let currentViewController = RCTPresentedViewController()
-    
+
             IDNowSDK.shared.start(token: token, fromViewController: currentViewController!, listener:{[weak self] (result: IDNowSDK.IdentResult.type, statusCode: IDNowSDK.IdentResult.statusCode, message: String) in
                 print ("SDK finished")
                 if result == .ERROR {
                     let localMessage = NSLocalizedString("idnow.platform.error.generic", comment: "").replacingOccurrences(of: "{errorCode}", with: statusCode.description)
-                    print(localMessage)
-                    
+                    print("\(localMessage) \(statusCode.description)")
                 } else if result == .FINISHED {
                 }
             })
