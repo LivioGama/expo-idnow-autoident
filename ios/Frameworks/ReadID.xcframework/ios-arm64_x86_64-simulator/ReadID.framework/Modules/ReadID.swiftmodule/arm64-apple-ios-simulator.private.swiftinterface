@@ -1,0 +1,2467 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=unchecked -O -module-name ReadID
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import Accelerate
+import AudioToolbox
+import CoreGraphics
+import CoreImage
+import CoreMedia
+import CoreNFC
+import CoreTelephony
+import CoreVideo
+import Foundation
+import ImageIO
+import Metal
+import MetalKit
+import MetalPerformanceShaders
+import QuartzCore
+@_exported import ReadID
+import Swift
+import UIKit
+import Vision
+import _Concurrency
+import _StringProcessing
+import os
+import simd
+public struct VeriffResponse : Swift.Decodable {
+  public let status: Swift.String
+  public let verification: ReadID.VeriffVerification?
+  public init(status: Swift.String, verification: ReadID.VeriffVerification?)
+  public init(from decoder: Swift.Decoder) throws
+}
+public class MRTDSessionManager {
+  public static var callbackQueue: Dispatch.DispatchQueue
+  public init(configuration: ReadID.ConnectorConfiguration)
+  public func newSession(resultHandler: @escaping (ReadID.ReadIDSession?, Swift.Error?) -> ())
+  @objc deinit
+}
+public protocol CNISData : ReadID.MRZData {
+  var documentCode: Swift.String { get }
+  mutating func setDocumentCode(_ documentCode: Swift.String) throws
+  var documentCodeImage: CoreGraphics.CGImage? { get }
+  var isDocumentCodeScoreHigh: Swift.Bool { get }
+  var issuingCountry: Swift.String { get }
+  mutating func setIssuingCountry(_ issuingCountry: Swift.String) throws
+  var issuingCountryImage: CoreGraphics.CGImage? { get }
+  var isIssuingCountryScoreHigh: Swift.Bool { get }
+  var lastName: Swift.String { get }
+  mutating func setLastName(_ lastName: Swift.String) throws
+  var lastNameImage: CoreGraphics.CGImage? { get }
+  var isLastNameScoreHigh: Swift.Bool { get }
+  var issuingDepartment: Swift.String { get }
+  mutating func setIssuingDepartment(_ issuingDepartment: Swift.String) throws
+  var issuingDepartmentImage: CoreGraphics.CGImage? { get }
+  var isIssuingDepartmentScoreHigh: Swift.Bool { get }
+  var issuingOffice: Swift.String { get }
+  mutating func setIssuingOffice(_ issuingOffice: Swift.String) throws
+  var issuingOfficeImage: CoreGraphics.CGImage? { get }
+  var isIssuingOfficeScoreHigh: Swift.Bool { get }
+  var dateOfIssue: Swift.String { get }
+  mutating func setDateOfIssue(_ dateOfIssue: Swift.String) throws
+  var dateOfIssueImage: CoreGraphics.CGImage? { get }
+  var isDateOfIssueScoreHigh: Swift.Bool { get }
+  var issuingDepartment2: Swift.String { get }
+  mutating func setIssuingDepartment2(_ issuingDepartment2: Swift.String) throws
+  var issuingDepartment2Image: CoreGraphics.CGImage? { get }
+  var isIssuingDepartment2ScoreHigh: Swift.Bool { get }
+  var documentNumber: Swift.String { get }
+  mutating func setDocumentNumber(_ documentNumber: Swift.String) throws
+  var documentNumberImage: CoreGraphics.CGImage? { get }
+  var isDocumentNumberScoreHigh: Swift.Bool { get }
+  var documentNumberCheckDigit: Swift.String { get }
+  mutating func setDocumentNumberCheckDigit(_ documentNumberCheckDigit: Swift.String) throws
+  var documentNumberCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isDocumentNumberCheckDigitScoreHigh: Swift.Bool { get }
+  var isDocumentNumberCheckDigitCorrect: Swift.Bool { get }
+  var firstName: Swift.String { get }
+  mutating func setFirstName(_ firstName: Swift.String) throws
+  var firstNameImage: CoreGraphics.CGImage? { get }
+  var isFirstNameScoreHigh: Swift.Bool { get }
+  var dateOfBirth: Swift.String { get }
+  mutating func setDateOfBirth(_ dateOfBirth: Swift.String) throws
+  var dateOfBirthImage: CoreGraphics.CGImage? { get }
+  var isDateOfBirthScoreHigh: Swift.Bool { get }
+  var dateOfBirthCheckDigit: Swift.String { get }
+  mutating func setDateOfBirthCheckDigit(_ dateOfBirthCheckDigit: Swift.String) throws
+  var dateOfBirthCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isDateOfBirthCheckDigitScoreHigh: Swift.Bool { get }
+  var isDateOfBirthCheckDigitCorrect: Swift.Bool { get }
+  var gender: Swift.String { get }
+  mutating func setGender(_ gender: Swift.String) throws
+  var genderImage: CoreGraphics.CGImage? { get }
+  var isGenderScoreHigh: Swift.Bool { get }
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+}
+extension ReadID.CNISData {
+  public func assumptionsCorrect() -> Swift.Bool
+}
+public enum MRZError : Swift.Error {
+  case invalidDigit(Swift.UnicodeScalar)
+  case invalidMRZString(Swift.String)
+  case notAndAsciiValue(Swift.UnicodeScalar)
+  case invalidLength(Swift.String)
+  case invalidMRZValue(Swift.String)
+}
+public protocol TD2Data : ReadID.TDData {
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+}
+public protocol VehicleFraData : ReadID.VehicleData {
+  var documentCode: Swift.String { get }
+  mutating func setDocumentCode(_ documentCode: Swift.String) throws
+  var documentCodeImage: CoreGraphics.CGImage? { get }
+  var isDocumentCodeScoreHigh: Swift.Bool { get }
+  var issuingCountry: Swift.String { get }
+  mutating func setIssuingCountry(_ issuingCountry: Swift.String) throws
+  var issuingCountryImage: CoreGraphics.CGImage? { get }
+  var isIssuingCountryScoreHigh: Swift.Bool { get }
+  var registrationNumber: Swift.String { get }
+  mutating func setRegistrationNumber(_ registrationNumber: Swift.String) throws
+  var registrationNumberImage: CoreGraphics.CGImage? { get }
+  var isRegistrationNumberScoreHigh: Swift.Bool { get }
+  var registrationNumberCheckDigit: Swift.String { get }
+  mutating func setRegistrationNumberCheckDigit(_ registrationNumberCheckDigit: Swift.String) throws
+  var registrationNumberCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isRegistrationNumberCheckDigitScoreHigh: Swift.Bool { get }
+  var isRegistrationNumberCheckDigitCorrect: Swift.Bool { get }
+  var identificationNumber: Swift.String { get }
+  mutating func setIdentificationNumber(_ identificationNumber: Swift.String) throws
+  var identificationNumberImage: CoreGraphics.CGImage? { get }
+  var isIdentificationNumberScoreHigh: Swift.Bool { get }
+  var identificationNumberCheckDigit: Swift.String { get }
+  mutating func setIdentificationNumberCheckDigit(_ identificationNumberCheckDigt: Swift.String) throws
+  var identificationNumberCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isIdentificationNumberCheckDigitScoreHigh: Swift.Bool { get }
+  var isIdentificationNumberCheckDigitCorrect: Swift.Bool { get }
+  var dateOfFirstRegistration: Swift.String { get }
+  mutating func setDateOfFirstRegistration(_ dateOfFirstRegistration: Swift.String) throws
+  var dateOfFirstRegistrationImage: CoreGraphics.CGImage? { get }
+  var isDateOfFirstRegistrationScoreHigh: Swift.Bool { get }
+  var dateOfFirstRegistrationCheckDigit: Swift.String { get }
+  mutating func setDateOfFirstRegistrationCheckDigit(_ dateOfFirstRegistrationCheckDigit: Swift.String) throws
+  var dateOfFirstRegistrationCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isDateOfFirstRegistrationCheckDigitScoreHigh: Swift.Bool { get }
+  var isDateOfFirstRegistrationCheckDigitCorrect: Swift.Bool { get }
+  var category: Swift.String { get }
+  mutating func setCategory(_ category: Swift.String) throws
+  var categoryImage: CoreGraphics.CGImage? { get }
+  var isCategoryScoreHigh: Swift.Bool { get }
+  var classification: Swift.String { get }
+  mutating func setClassification(_ classification: Swift.String) throws
+  var classificationImage: CoreGraphics.CGImage? { get }
+  var isClassificationScoreHigh: Swift.Bool { get }
+  var brand: Swift.String { get }
+  mutating func setBrand(_ brand: Swift.String) throws
+  var brandImage: CoreGraphics.CGImage? { get }
+  var isBrandScoreHigh: Swift.Bool { get }
+  var model: Swift.String { get }
+  mutating func setModel(_ model: Swift.String) throws
+  var modelImage: CoreGraphics.CGImage? { get }
+  var isModelScoreHigh: Swift.Bool { get }
+  var documentNumber: Swift.String { get }
+  mutating func setDocumentNumber(_ documentNumber: Swift.String) throws
+  var documentNumberImage: CoreGraphics.CGImage? { get }
+  var isDocumentNumberScoreHigh: Swift.Bool { get }
+  var documentNumberCheckDigit: Swift.String { get }
+  mutating func setDocumentNumberCheckDigit(_ documentNumberCheckDigit: Swift.String) throws
+  var documentNumberCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isDocumentNumberCheckDigitScoreHigh: Swift.Bool { get }
+  var isDocumentNumberCheckDigitCorrect: Swift.Bool { get }
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+}
+extension ReadID.VehicleFraData {
+  public func assumptionsCorrect() -> Swift.Bool
+}
+public protocol TD3Data : ReadID.TDData {
+  var optionalDataCheckDigit: Swift.String { get }
+  mutating func setOptionalDataCheckDigit(_ optionalDataCheckDigit: Swift.String) throws
+  var isOptionalDataCheckDigitScoreHigh: Swift.Bool { get }
+  var isOptionalDataCheckDigitCorrect: Swift.Bool { get }
+  var optionalDataCheckDigitImage: CoreGraphics.CGImage? { get }
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+}
+extension Foundation.Data : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public var hexadecimalString: Swift.String {
+    get
+  }
+  public var hexadecimalStringUnformatted: Swift.String {
+    get
+  }
+  public init(stringLiteral value: Foundation.Data.StringLiteralType)
+  public typealias ExtendedGraphemeClusterLiteralType = Foundation.Data.StringLiteralType
+  public typealias UnicodeScalarLiteralType = Foundation.Data.StringLiteralType
+}
+public protocol EDLData : ReadID.MRZData {
+  var documentCode: Swift.String { get }
+  mutating func setDocumentCode(_ documentCode: Swift.String) throws
+  var documentCodeImage: CoreGraphics.CGImage? { get }
+  var isDocumentCodeScoreHigh: Swift.Bool { get }
+  var configuration: Swift.String { get }
+  mutating func setConfiguration(_ configuration: Swift.String) throws
+  var configurationImage: CoreGraphics.CGImage? { get }
+  var isConfigurationScoreHigh: Swift.Bool { get }
+  var discretionaryData: Swift.String { get }
+  mutating func setDiscretionaryData(_ discretionaryData: Swift.String) throws
+  var discretionaryDataImage: CoreGraphics.CGImage? { get }
+  var isDiscretionaryDataScoreHigh: Swift.Bool { get }
+  var compositeInput: Swift.String { get }
+  mutating func setCompositeInput(_ compositeInput: Swift.String) throws
+  var compositeInputImage: CoreGraphics.CGImage? { get }
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+  var bapInput: Swift.String { get }
+}
+extension ReadID.EDLData {
+  public var documentCode: Swift.String {
+    get
+    set
+  }
+  public var isDocumentCodeScoreHigh: Swift.Bool {
+    get
+  }
+  public var configuration: Swift.String {
+    get
+    set
+  }
+  public var isConfigurationScoreHigh: Swift.Bool {
+    get
+  }
+  public var discretionaryData: Swift.String {
+    get
+    set
+  }
+  public var isDiscretionaryDataScoreHigh: Swift.Bool {
+    get
+  }
+  public var compositeInput: Swift.String {
+    get
+    set
+  }
+  public var compositeCheckDigit: Swift.String {
+    get
+    set
+  }
+  public var isCompositeCheckDigitScoreHigh: Swift.Bool {
+    get
+  }
+  public var isCompositeCheckDigitCorrect: Swift.Bool {
+    get
+  }
+  public func assumptionsCorrect() -> Swift.Bool
+  public var bapInput: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class DeserializationSupport {
+  public static func readIDSessionFromJSON(json: [Swift.AnyHashable : Any], configuration: ReadID.ConnectorConfiguration) throws -> ReadID.ReadIDSession
+  @objc deinit
+}
+public enum NFCLocation : Swift.Int, Swift.CustomStringConvertible {
+  case passportFrontMiddle
+  case passportFrontLow
+  case passportInnerBackMiddle
+  case idMiddle
+  case dlMiddle
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension Swift.Optional : Swift.Comparable where Wrapped : Swift.Comparable {
+  public static func < (lhs: Swift.Optional<Wrapped>, rhs: Swift.Optional<Wrapped>) -> Swift.Bool
+  public static func <= (lhs: Swift.Optional<Wrapped>, rhs: Swift.Optional<Wrapped>) -> Swift.Bool
+  public static func > (lhs: Swift.Optional<Wrapped>, rhs: Swift.Optional<Wrapped>) -> Swift.Bool
+  public static func >= (lhs: Swift.Optional<Wrapped>, rhs: Swift.Optional<Wrapped>) -> Swift.Bool
+}
+@available(iOS 13, *)
+public protocol CompletionHandler {
+  func requestSucceeded()
+}
+public enum OperationResult : Swift.Equatable, Swift.CustomStringConvertible {
+  case Success
+  case NonFatalError
+  case FatalError(cause: Swift.Error)
+  case Skipped
+  case Cancelled
+  public var description: Swift.String {
+    get
+  }
+  public static func == (lhs: ReadID.OperationResult, rhs: ReadID.OperationResult) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class MRTDReadRequest {
+  @objc deinit
+}
+extension CoreFoundation.CGRect : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class MRTDManager {
+  public static var callbackQueue: Dispatch.DispatchQueue
+  public static var log: ReadID.Log {
+    get
+  }
+  @available(iOS 13, *)
+  public static var isInternalNFCSupported: Swift.Bool {
+    get
+  }
+  @available(iOS 13, *)
+  public static var statusMessage: Swift.String {
+    get
+    set
+  }
+  @available(iOS 13, *)
+  public static var errorMessage: Swift.String? {
+    get
+    set
+  }
+  @available(iOS 13, *)
+  public static func addListener(listener: ReadID.AdapterStatusListener)
+  @available(iOS 13, *)
+  public static func removeListener(listener: ReadID.AdapterStatusListener)
+  @available(iOS 13, *)
+  public static func removeAllListeners()
+  @available(iOS 13, *)
+  public static func readDocument(readRequest: ReadID.MRTDReadRequest, listener: ReadID.MRTDListener) throws
+  @available(iOS 13, *)
+  public static func cancelRead()
+  @objc deinit
+}
+public enum AccessControlOption : Swift.CustomStringConvertible {
+  case Auto
+  case BACPreferred
+  case PACEPreferred
+  case BACOnly
+  case PACEOnly
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: ReadID.AccessControlOption, b: ReadID.AccessControlOption) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class VIZSession {
+  public var frontImage: ReadID.Image?
+  public var backImage: ReadID.Image?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class HttpRequest {
+  public static func setupPinning(sha256: Swift.String?) throws
+  public static func setupPinning(sha256: [Swift.String]) throws
+  @objc deinit
+}
+public enum NFCChipSupport : Swift.Int, Swift.CustomStringConvertible {
+  case supported
+  case unsupported
+  case noNFCChip
+  case unknown
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+final public class CNISDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.CNISData?
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.CNISData?
+  @objc deinit
+}
+public struct ErrorResponseError : Swift.Error, Swift.Decodable {
+  public let reason: Swift.String
+  public let message: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ErrorResponse : Swift.Error, Swift.Decodable {
+  public let code: Swift.Int
+  public let message: Swift.String
+  public let errors: [ReadID.ErrorResponseError]?
+  public init(code: Swift.Int, message: Swift.String, errors: [ReadID.ErrorResponseError]?)
+  public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class VIZImages {
+  public var vizFront: ReadID.VIZImage? {
+    get
+  }
+  public var vizBack: ReadID.VIZImage? {
+    get
+  }
+  public var vizCustom: ReadID.VIZImage? {
+    get
+  }
+  @objc deinit
+}
+public struct AAConfig {
+  public let publicKey: ReadID.PublicKey
+  public let digestAlgorithm: Swift.String
+  public let signatureAlgorithm: Swift.String
+}
+public struct ActiveAuthenticationResult {
+  public var aaConfig: ReadID.AAConfig? {
+    get
+  }
+  public var challenge: Foundation.Data {
+    get
+  }
+  public var response: Foundation.Data? {
+    get
+  }
+}
+public struct VerifyVeriffResponse : Swift.Decodable {
+  public let state: ReadID.State
+  public let veriffResponse: ReadID.VeriffResponse?
+  public let error: ReadID.ErrorResponse?
+  public init(state: ReadID.State, veriffResponse: ReadID.VeriffResponse?, error: ReadID.ErrorResponse?)
+  public init(from decoder: Swift.Decoder) throws
+}
+final public class TD1DataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.TD1Data?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.TD1Data?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ReadIDSession {
+  public var sessionId: Swift.String {
+    get
+  }
+  public var instanceId: Swift.String {
+    get
+  }
+  public var clientId: Swift.String {
+    get
+  }
+  public var consolidatedIdentityData: ReadID.ConsolidatedIdentityData? {
+    get
+  }
+  public var deviceId: Swift.String {
+    get
+  }
+  public var customerApplicationReference: Swift.String? {
+    get
+  }
+  public var creationDate: Foundation.Date? {
+    get
+  }
+  public var expiryDate: Foundation.Date? {
+    get
+  }
+  public var expiryTimestamp: Swift.Int64? {
+    get
+  }
+  public var nfcSession: ReadID.NFCSession {
+    get
+  }
+  public var ocrSession: ReadID.OCRSession? {
+    get
+  }
+  public var vizSession: ReadID.VIZSession? {
+    get
+  }
+  public var vizImages: ReadID.VIZImages? {
+    get
+  }
+  public var opaqueId: Swift.String?
+  public var documentContent: ReadID.MRTDDocumentContent? {
+    get
+  }
+  public var clientConfiguration: ReadID.ClientConfiguration? {
+    get
+  }
+  public init()
+  @objc deinit
+  public func saveState() -> ReadID.ReadIDSession.ReadIDSessionState?
+  public func restoreState(from: ReadID.ReadIDSession.ReadIDSessionState) throws
+  @_hasMissingDesignatedInitializers public class ReadIDSessionState {
+    @objc deinit
+  }
+}
+public struct VerifyTokenValidation {
+  public let verifyToken: Swift.String
+  public let attemptsLeft: Swift.Int
+  public let frameAvailable: Swift.Bool
+  public let passed: Swift.Bool
+  public let reason: Swift.String?
+}
+@_hasMissingDesignatedInitializers public class NFCSession {
+  public var data: [ReadID.File : Foundation.Data]
+  public var documentType: ReadID.DocumentType?
+  public var accessControlStatus: ReadID.AccessControlStatus
+  public var verificationStatus: ReadID.VerificationStatus
+  public var features: [Swift.String]
+  @objc deinit
+}
+public struct OnfidoResults : Swift.Decodable {
+  public let onfidoCheck: ReadID.OnfidoCheck?
+  public let onfidoReport: ReadID.OnfidoReport?
+  public init(from decoder: Swift.Decoder) throws
+}
+final public class TD2DataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.TD2Data?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.TD2Data?
+  @objc deinit
+}
+@available(iOS 13, *)
+public protocol AdapterStatusListener : AnyObject {
+  func adapterStatusChanged(newStatus: ReadID.AdapterStatus)
+}
+public enum AdapterStatus {
+  case NotConnected
+  case Connected
+  public static func == (a: ReadID.AdapterStatus, b: ReadID.AdapterStatus) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol TD1Data : ReadID.TDData {
+  var optionalData2: Swift.String { get }
+  mutating func setOptionalData2(_ optionalData2: Swift.String) throws
+  var optionalData2Image: CoreGraphics.CGImage? { get }
+  var isOptionalData2ScoreHigh: Swift.Bool { get }
+  var compositeCheckDigit: Swift.String { get }
+  mutating func setCompositeCheckDigit(_ compositeCheckDigit: Swift.String) throws
+  var isCompositeCheckDigitScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigitCorrect: Swift.Bool { get }
+  var compositeCheckDigitImage: CoreGraphics.CGImage? { get }
+}
+public struct ConnectorConfiguration {
+  public init(baseURL: Foundation.URL, accessKey: Swift.String, customHeaders: [Swift.String : Swift.String]? = nil)
+  public init(baseURL: Foundation.URL, readyToken: Swift.String, customHeaders: [Swift.String : Swift.String]? = nil)
+  public init(baseURL: Foundation.URL, oAuthToken: Swift.String, customHeaders: [Swift.String : Swift.String]? = nil)
+  public init(baseURL: Foundation.URL, username: Swift.String, password: Swift.String, customHeaders: [Swift.String : Swift.String]? = nil)
+  public init(baseURL: Foundation.URL, accessKey: Swift.String, applicationLevelEncryptionPins: [Swift.String], customHeaders: [Swift.String : Swift.String]? = nil) throws
+  public init(baseURL: Foundation.URL, readyToken: Swift.String, applicationLevelEncryptionPins: [Swift.String], customHeaders: [Swift.String : Swift.String]? = nil) throws
+  public init(baseURL: Foundation.URL, oAuthToken: Swift.String, applicationLevelEncryptionPins: [Swift.String], customHeaders: [Swift.String : Swift.String]? = nil) throws
+  public init(baseURL: Foundation.URL, username: Swift.String, password: Swift.String, applicationLevelEncryptionPins: [Swift.String], customHeaders: [Swift.String : Swift.String]? = nil) throws
+}
+@available(iOS 13, *)
+public protocol MRTDConfigurationPublicProperties {
+  var documentType: ReadID.DocumentType { get set }
+  var assumeAccessControlRequired: Swift.Bool { get set }
+  var AAEnabled: Swift.Bool { get set }
+  var EACCAEnabled: Swift.Bool { get set }
+  var performEarlyEACCA: Swift.Bool { get set }
+  var DSCSEnabled: Swift.Bool { get set }
+  var trustAnchors: [ReadID.CSCAMasterList] { get set }
+  var filesToRead: [ReadID.Files] { get set }
+  var interpretSessionLocally: Swift.Bool { get set }
+  var analyticsEnabled: Swift.Bool { get set }
+  var dataminingURL: Foundation.URL { get set }
+  var allowResponseChaining: Swift.Bool { get set }
+  var allowResumeNFCReading: Swift.Bool { get set }
+}
+public struct AccessControlStatus {
+  public typealias ReasonedVerdict = (verdict: ReadID.AccessControlStatus.Verdict, reason: ReadID.AccessControlStatus.ReasonCode)
+  public typealias ReasonedVerdictInfo<T> = (verdict: ReadID.AccessControlStatus.Verdict, reason: ReadID.AccessControlStatus.ReasonCode, info: T)
+  public var bac: (verdict: ReadID.AccessControlStatus.Verdict, reason: ReadID.AccessControlStatus.ReasonCode) {
+    get
+  }
+  public var pace: (verdict: ReadID.AccessControlStatus.Verdict, reason: ReadID.AccessControlStatus.ReasonCode, info: ReadID.PACEInfo?) {
+    get
+  }
+  public enum Verdict {
+    case Unknown
+    case NotPresent
+    case PresentNotChecked
+    case PresentFailed
+    case PresentSucceeded
+    public var present: Swift.Bool {
+      get
+    }
+    public var succeeded: Swift.Bool {
+      get
+    }
+    public static func == (a: ReadID.AccessControlStatus.Verdict, b: ReadID.AccessControlStatus.Verdict) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ReasonCode {
+    case Unknown
+    case Succeeded
+    case NotSupported
+    case PresenceDetected
+    case UnexpectedExceptionFailure
+    case UnsupportedKeyTypeFailure
+    case ReadErrorConfigurationFailure
+    case InsufficientCredentials
+    case StoredHashNotFoundFailure
+    case UnsupportedDigestAlgorithmFailure
+    case UnsupportedSignatureAlgorithmFailure
+    case UsingAlternativeControl
+    public var encoded: Swift.String {
+      get
+    }
+    public static func == (a: ReadID.AccessControlStatus.ReasonCode, b: ReadID.AccessControlStatus.ReasonCode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var succeeded: Swift.Bool {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class EDLDocumentContent : ReadID.MRTDDocumentContent {
+  public var placeOfBirth: Swift.String? {
+    get
+  }
+  public var fullDateOfIssue: Foundation.Date? {
+    get
+  }
+  public var fullDateOfExpiry: Foundation.Date? {
+    get
+  }
+  public var saiString: Swift.String? {
+    get
+  }
+  public var saiType: Swift.String? {
+    get
+  }
+  public var countryOfBirth: Swift.String? {
+    get
+  }
+  public var placeOfBirthAlt: Swift.String? {
+    get
+  }
+  public var nameOfHolderAlt1: Swift.String? {
+    get
+  }
+  public var nameOfHolderAlt2: Swift.String? {
+    get
+  }
+  public var categories: [ReadID.CategoryInfo] {
+    get
+  }
+  @objc deinit
+}
+@available(iOS 13, *)
+public struct PACEResult {
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class VIZCaptureView : UIKit.UIView, ReadID.VisualDocumentCapture {
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var guidanceIndicatorPercentage: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var statusUpdateInterval: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var rotation: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var guidanceIndicator: UIKit.UIView?
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var maskColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var highlightColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var shutterSoundEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var showFaceIndicatorInOverlay: Swift.Bool
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var showMRZIndicatorInOverlay: Swift.Bool
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var overlayFaceImagePlaceholder: UIKit.UIView?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var manualCaptureButton: UIKit.UIButton? {
+    @objc get
+    @objc set
+  }
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var documentOverlay: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var overlayMRZPlaceholder: UIKit.UIView?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var delegate: Swift.AnyObject?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var progressIndicator: ReadID.VIZProgressIndicator?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dbgSharp: UIKit.UILabel?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dbgGlare: UIKit.UILabel?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dbgFingers: UIKit.UILabel?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dbgMRZ: UIKit.UILabel?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dbgFace: UIKit.UILabel?
+  @objc @IBOutlet @_Concurrency.MainActor(unsafe) weak public var dgbQR: UIKit.UILabel?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) public var hasTorch: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var torchOn: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToWindow()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToSuperview()
+  @_Concurrency.MainActor(unsafe) public func capturePage(pageConfiguration: ReadID.PageCaptureConfiguration, alternativePageConfigurations: [ReadID.PageCaptureConfiguration]?, captureConfiguration: ReadID.CaptureRequestConfiguration, session: ReadID.ReadIDSession, callback: @escaping ReadID.VisualDocumentCaptureCallback)
+  @_Concurrency.MainActor(unsafe) public func cancelPageCapture()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public enum SessionKind : Swift.String {
+  case standard
+  case light
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension Foundation.Data {
+  public static func from(pixelBuffer: CoreVideo.CVPixelBuffer) -> Foundation.Data
+}
+extension CoreVideo.CVBuffer {
+  public static func from(_ data: Foundation.Data) -> CoreVideo.CVPixelBuffer
+}
+public struct ValidateIProovVerifyTokenResponse : Swift.Decodable {
+  public let verifyToken: Swift.String
+  public let attemptsLeft: Swift.Int
+  public let frameAvailable: Swift.Bool
+  public let passed: Swift.Bool
+  public let checked: Swift.Bool
+  public let reason: Swift.String?
+  public init(from decoder: Swift.Decoder) throws
+}
+public protocol MRZData {
+  var mrz: ReadID.MachineReadableZone { get }
+  func assumptionsCorrect() -> Swift.Bool
+}
+extension ReadID.MRZData {
+  public var binaryImage: CoreGraphics.CGImage? {
+    get
+  }
+  public func toString() -> Swift.String
+}
+@available(iOS 13, *)
+public enum CancelReason {
+  case UserRequested
+  case Timeout
+  public static func == (a: ReadID.CancelReason, b: ReadID.CancelReason) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol MRVBData : ReadID.TDData {
+}
+public struct ImageInformation {
+  public enum FaceImageType : Swift.UInt8 {
+    case Unspecified
+    case Basic
+    case FullFrontal
+    case TokenFrontal
+    case Other
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public enum DataType : Swift.UInt8 {
+    case JPEG
+    case JPEG2000
+    public init?(rawValue: Swift.UInt8)
+    public typealias RawValue = Swift.UInt8
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public enum ColorSpace : Swift.UInt8, Swift.ExpressibleByIntegerLiteral, Swift.ExpressibleByStringLiteral {
+    public typealias StringLiteralType = Swift.String
+    public typealias IntegerLiteralType = Swift.UInt8
+    case Unspecified
+    case RGB24
+    case YUV422
+    case Grayscale
+    case Other
+    public init(integerLiteral value: Swift.UInt8)
+    public init(stringLiteral value: ReadID.ImageInformation.ColorSpace.StringLiteralType)
+    public init?(rawValue: Swift.UInt8)
+    public typealias ExtendedGraphemeClusterLiteralType = ReadID.ImageInformation.ColorSpace.StringLiteralType
+    public typealias RawValue = Swift.UInt8
+    public typealias UnicodeScalarLiteralType = ReadID.ImageInformation.ColorSpace.StringLiteralType
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public enum SourceType : Swift.UInt8, Swift.ExpressibleByIntegerLiteral, Swift.ExpressibleByStringLiteral {
+    public typealias StringLiteralType = Swift.String
+    public typealias IntegerLiteralType = Swift.UInt8
+    case Unspecified
+    case StaticPhotographUnknownSource
+    case StaticPhotographDigitalStillCamera
+    case StaticPhotographScanner
+    case SingleVideoFrameUnknownSource
+    case SingleVideoFrameAnalogVideoCamera
+    case SingleVideoFrameDigitalVideoCamera
+    case Unknown
+    public init(integerLiteral value: Swift.UInt8)
+    public init(stringLiteral value: ReadID.ImageInformation.SourceType.StringLiteralType)
+    public init?(rawValue: Swift.UInt8)
+    public typealias ExtendedGraphemeClusterLiteralType = ReadID.ImageInformation.SourceType.StringLiteralType
+    public typealias RawValue = Swift.UInt8
+    public typealias UnicodeScalarLiteralType = ReadID.ImageInformation.SourceType.StringLiteralType
+    public var rawValue: Swift.UInt8 {
+      get
+    }
+  }
+  public let imageType: ReadID.ImageInformation.FaceImageType
+  public let dataType: ReadID.ImageInformation.DataType
+  public let width: Swift.UInt16
+  public let height: Swift.UInt16
+  public let colorSpace: ReadID.ImageInformation.ColorSpace
+  public let sourceType: ReadID.ImageInformation.SourceType
+  public let deviceType: Swift.UInt16
+  public let quality: Swift.UInt16
+}
+final public class EDLDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.EDLData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.EDLData?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class X509Certificate {
+  convenience public init(from: Foundation.Data) throws
+  @objc deinit
+  public var serialNumber: Swift.String? {
+    get
+  }
+  public var publicKey: ReadID.PublicKey? {
+    get
+  }
+  public var signatureAlgorithm: Swift.String? {
+    get
+  }
+  public var sha1ThumbPrint: Foundation.Data? {
+    get
+  }
+  public var issuer: Swift.String? {
+    get
+  }
+  public var issuerEncoded: Foundation.Data? {
+    get
+  }
+  public var authorityKeyIdentifier: Foundation.Data? {
+    get
+  }
+  public var subject: Swift.String? {
+    get
+  }
+  public var subjectEncoded: Foundation.Data? {
+    get
+  }
+  public var subjectKeyIdentifier: Foundation.Data? {
+    get
+  }
+  public var notBefore: Foundation.Date? {
+    get
+  }
+  public var notAfter: Foundation.Date? {
+    get
+  }
+  public var inValidPeriod: Swift.Bool {
+    get
+  }
+  public var version: Swift.Int {
+    get
+  }
+  public var encoded: Foundation.Data {
+    get
+  }
+  public var isSelfSigned: Swift.Bool {
+    get
+  }
+  public func wasSignedBy(_ cert: ReadID.X509Certificate) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class VIZImage {
+  final public let captureMode: ReadID.CaptureMode
+  final public let description: Swift.String?
+  final public let features: ReadID.Features?
+  final public let image: ReadID.Image?
+  final public let qualityCriteria: ReadID.QualityCriteria?
+  final public let vizQRCodeSession: ReadID.VIZQRCodeSession?
+  @objc deinit
+}
+public struct HashMatchResult {
+  public let storedHash: Foundation.Data
+  public let computedHash: Foundation.Data?
+  public var isMatch: Swift.Bool {
+    get
+  }
+}
+public struct CategoryInfo {
+  public let drivingCategory: Swift.String
+  public let dateOfIssuance: Swift.String?
+  public let dateOfExpiry: Swift.String?
+  public let restrictionCode: Swift.String?
+  public let restrictionSign: Swift.String?
+  public let restrictionValue: Swift.String?
+  public var dateOfIssuanceFormatyyyyMMdd: Swift.String? {
+    get
+  }
+  public var dateOfExpiryFormatyyyyMMdd: Swift.String? {
+    get
+  }
+}
+public enum DocumentType : Swift.String {
+  case ICAO_MRTD
+  case EU_EDL
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class NFCLocationManager {
+  public typealias LocationCallback = (ReadID.NFCLocation?, Swift.Error?) -> Swift.Void
+  public typealias ChipSupportCallback = (ReadID.NFCChipSupport?, Swift.Error?) -> Swift.Void
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getDocNFCLocation(_ mrzData: ReadID.MRZData) -> ReadID.NFCLocation
+  public static func getDocNFCLocation(session: ReadID.ReadIDSession, mrzData: ReadID.MRZData, callback: @escaping ReadID.NFCLocationManager.LocationCallback)
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getICAODocNFCLocation(documentCode: Swift.String, issuingCountry: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String) -> ReadID.NFCLocation
+  public static func getICAODocNFCLocation(session: ReadID.ReadIDSession, documentCode: Swift.String, issuingCountry: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String, callback: @escaping ReadID.NFCLocationManager.LocationCallback)
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getEDLDocNFCLocation(documentCode: Swift.String, issuingCountry: Swift.String, eDLVersion: Swift.String) -> ReadID.NFCLocation
+  public static func getEDLDocNFCLocation(session: ReadID.ReadIDSession, documentCode: Swift.String, issuingCountry: Swift.String, eDLVersion: Swift.String, callback: @escaping ReadID.NFCLocationManager.LocationCallback)
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getDocNFCChipSupport(_ mrzData: ReadID.MRZData) -> ReadID.NFCChipSupport
+  public static func getDocNFCChipSupport(session: ReadID.ReadIDSession, mrzData: ReadID.MRZData, callback: @escaping ReadID.NFCLocationManager.ChipSupportCallback)
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getICAODocNFCChipSupport(documentCode: Swift.String, issuingCountry: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String) -> ReadID.NFCChipSupport
+  public static func getICAODocNFCChipSupport(session: ReadID.ReadIDSession, documentCode: Swift.String, issuingCountry: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String, callback: @escaping ReadID.NFCLocationManager.ChipSupportCallback)
+  @available(*, deprecated, message: "Use the new async API")
+  public static func getEDLDocNFCChipSupport(documentCode: Swift.String, issuingCountry: Swift.String, eDLVersion: Swift.String) -> ReadID.NFCChipSupport
+  public static func getEDLDocNFCChipSupport(session: ReadID.ReadIDSession, documentCode: Swift.String, issuingCountry: Swift.String, eDLVersion: Swift.String, callback: @escaping ReadID.NFCLocationManager.ChipSupportCallback)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class PublicKey {
+  public enum KeyType : Swift.String {
+    case None
+    case RSA
+    case RSA2
+    case DSA
+    case DSA1
+    case DSA2
+    case DSA3
+    case DSA4
+    case DH
+    case DHX
+    case EC
+    case HMAC
+    case CMAC
+    case TLS1_PRF
+    case HKDF
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc deinit
+  public var type: ReadID.PublicKey.KeyType {
+    get
+  }
+  public var bitsize: Swift.Int {
+    get
+  }
+  public var hash: Foundation.Data? {
+    get
+  }
+  public var subjectPublicKeyInfoHash: Foundation.Data? {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class CertificateStore {
+  @objc deinit
+}
+extension ReadID.ReadIDSession : ReadID.Commitable {
+  public var isClientServerSession: Swift.Bool {
+    get
+  }
+  public var isExpired: Swift.Bool {
+    get
+  }
+  public func commit(completionHandler: @escaping (ReadID.ReadIDSession?, Swift.Error?) -> ())
+  public func retrieveVerifyToken(completionHandler: @escaping (ReadID.VerifyToken?, Swift.Error?) -> ())
+  public func validateVerifyToken(token: ReadID.VerifyToken, completionHandler: @escaping (ReadID.VerifyTokenValidation?, Swift.Error?) -> ())
+  public func retrieveIProovVerifyToken(completionHandler: @escaping (ReadID.IProovResult<ReadID.RetrieveIProovVerifyTokenResponse>?, Swift.Error?) -> ())
+  public func validateIProovVerifyToken(token: Swift.String, completionHandler: @escaping (ReadID.IProovResult<ReadID.ValidateIProovVerifyTokenResponse>?, Swift.Error?) -> ())
+  public func verifyOnfido(completionHandler: @escaping (ReadID.OnfidoResults?, Swift.Error?) -> ())
+  public func verifyVeriff(completionHandler: @escaping (ReadID.VerifyVeriffResponse?, Swift.Error?) -> ())
+}
+@available(iOS 13, *)
+@dynamicMemberLookup public class MRTDReadRequestBuilder {
+  public typealias Callback = (ReadID.MRTDReadRequest) -> Swift.Void
+  public var accessControlOption: ReadID.AccessControlOption
+  public var extendedLengthAPDUPreference: ReadID.ExtendedLengthAPDUPreference
+  public var documentCode: Swift.String
+  public var issuingCountry: Swift.String
+  public var dateOfBirth: Swift.String
+  public var dateOfExpiry: Swift.String
+  public var edlVersion: Swift.String
+  public subscript<T>(dynamicMember keyPath: Swift.WritableKeyPath<ReadID.MRTDConfigurationPublicProperties, T>) -> T {
+    get
+    set
+  }
+  public init()
+  @available(*, deprecated, message: "Use the new async API")
+  public func build(session: ReadID.ReadIDSession, credentials: ReadID.AccessControlCredentials? = nil) throws -> ReadID.MRTDReadRequest
+  public func build(session: ReadID.ReadIDSession, credentials: ReadID.AccessControlCredentials? = nil, callback: @escaping ReadID.MRTDReadRequestBuilder.Callback) throws
+  @objc deinit
+}
+public enum SessionManagerErrors : Swift.Error {
+  case EmptyResponse
+  case ErrorParsingResponse
+  case UnexpectedContent
+  public static func == (a: ReadID.SessionManagerErrors, b: ReadID.SessionManagerErrors) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+public enum MRTDError : Swift.Error {
+  case InvalidMasterlist
+  case MasterListSignatureIncorrect
+  case MissingConfiguration
+  case MissingCredentials
+  case InvalidCredentialType
+  case ReadingInProgress
+  case InsecureChannel
+  case RequestReuse
+  case UnencodableData
+  case UndecodableData
+  case InvalidDocumentAID
+  case ExpiredSDK
+  case MissingSOD
+  case PrematureEndoOfFile
+  case AccessControlFailed
+  public static func == (a: ReadID.MRTDError, b: ReadID.MRTDError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+extension ReadID.MRTDError {
+  public var localizedDescription: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @available(*, deprecated, message: "This is a temporary workaroud pending architecture changes, will be removed in a future release. For InnoValor internal use ONLY")
+public class TemporaryAnalyticsConfigurationInnovalorInternalDoNotUse {
+  public static var analyticsEnabled: Swift.Bool
+  public static var dataminingURL: Foundation.URL
+  @objc deinit
+}
+public enum Files : ReadID.File, Swift.CaseIterable {
+  case ICAO_DG1
+  case ICAO_DG2
+  case ICAO_DG3
+  case ICAO_DG4
+  case ICAO_DG5
+  case ICAO_DG6
+  case ICAO_DG7
+  case ICAO_DG8
+  case ICAO_DG9
+  case ICAO_DG10
+  case ICAO_DG11
+  case ICAO_DG12
+  case ICAO_DG13
+  case ICAO_DG14
+  case ICAO_DG15
+  case ICAO_DG16
+  case ICAO_COM
+  case ICAO_SOD
+  case EDL_DG1
+  case EDL_DG2
+  case EDL_DG3
+  case EDL_DG4
+  case EDL_DG5
+  case EDL_DG6
+  case EDL_DG7
+  case EDL_DG8
+  case EDL_DG9
+  case EDL_DG10
+  case EDL_DG11
+  case EDL_DG12
+  case EDL_DG13
+  case EDL_DG14
+  case EDL_COM
+  case EDL_SOD
+  case CardSecurity
+  case CardAccess
+  public static let defaultICAOGroups: [ReadID.Files]
+  public static let defaultEDLGroups: [ReadID.Files]
+  public func toNumber() -> Swift.Int
+  public init?(rawValue: ReadID.File)
+  public typealias AllCases = [ReadID.Files]
+  public typealias RawValue = ReadID.File
+  public static var allCases: [ReadID.Files] {
+    get
+  }
+  public var rawValue: ReadID.File {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class ConsolidatedValue<T> {
+  public var value: T?
+  public var confidence: Swift.Float
+  public var source: ReadID.ConsolidatedIdentityData.Source?
+  @objc deinit
+}
+public struct ClientConfiguration {
+  public var sessionType: ReadID.SessionType
+}
+public enum Application : Swift.UInt8 {
+  case Root
+  case ICAO
+  case EU_EDL
+  public init?(rawValue: Swift.UInt8)
+  public typealias RawValue = Swift.UInt8
+  public var rawValue: Swift.UInt8 {
+    get
+  }
+}
+public struct File : Swift.RawRepresentable, Swift.Equatable, Swift.ExpressibleByIntegerLiteral, Swift.Hashable, Swift.CustomStringConvertible {
+  public typealias IntegerLiteralType = ReadID.File.RawValue
+  public typealias RawValue = Swift.UInt64
+  public let app: ReadID.Application
+  public let dg: Swift.UInt8?
+  public init(integerLiteral value: ReadID.File.RawValue)
+  public init(rawValue: ReadID.File.RawValue)
+  public var rawValue: Swift.UInt64 {
+    get
+  }
+  public var isDataGroup: Swift.Bool {
+    get
+  }
+  public static func == (lhs: ReadID.File, rhs: ReadID.File) -> Swift.Bool
+  public var description: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class OCRResult : ReadID.ImageBackedMachineReadableZone {
+  final public var source: ReadID.MachineReadableZoneSource {
+    get
+  }
+  public static let DEFAULT_MIN_HIGH_SCORE: Swift.Float
+  final public var lines: [Swift.String]
+  final public let scores: [[Swift.Float]]
+  final public let averageScore: Swift.Float
+  final public var isScoreHigh: Swift.Bool {
+    get
+  }
+  final public var lineCount: Swift.Int {
+    get
+  }
+  final public var lineWidth: Swift.Int {
+    get
+  }
+  final public let binaryImage: CoreGraphics.CGImage
+  final public let vizImage: UIKit.UIImage
+  final public let vizImageRotation: Swift.Int
+  final public func toString() -> Swift.String
+  final public func getCrop(column x: Swift.Int, line y: Swift.Int, width: Swift.Int, height: Swift.Int) -> CoreGraphics.CGImage?
+  @objc deinit
+}
+public enum NetworkError : Swift.Error {
+  case IllegalArgument(string: Swift.String)
+  case HttpServerError(statusCode: Swift.Int)
+  case JSONDeserializeError(string: Swift.String)
+  case InvalidPinningHashException
+  case UnexpectedContentError
+  case NoContent
+  case SecureConnectionRequired
+  case BadURL
+  case CannotConnectToHost
+  case ConnectionLost
+  case ServerUntrusted(lowLevelError: Swift.Error)
+  case ConnectionCancelledInvalidPin
+  case MissingEncryptionCertificate
+  case Other(lowLevelError: Swift.Error)
+  case Timeout
+  case NotConnectedToTheInternet
+  case UnknownError
+}
+final public class AllEDLDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.EDLData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.EDLData?
+  @objc deinit
+}
+public protocol EDLFraData : ReadID.EDLData {
+  var issuingCountry: Swift.String { get }
+  mutating func setIssuingCountry(_ issuingCountry: Swift.String) throws
+  var issuingCountryImage: CoreGraphics.CGImage? { get }
+  var isIssuingCountryScoreHigh: Swift.Bool { get }
+  var documentNumber: Swift.String { get }
+  mutating func setDocumentNumber(_ documentNumber: Swift.String) throws
+  var documentNumberImage: CoreGraphics.CGImage? { get }
+  var isDocumentNumberScoreHigh: Swift.Bool { get }
+  var compositeInput1: Swift.String { get }
+  mutating func setCompositeInput1(_ compositeInput1: Swift.String) throws
+  var compositeInput1Image: CoreGraphics.CGImage? { get }
+  var compositeCheckDigit1: Swift.String { get }
+  mutating func setCompositeCheckDigit1(_ compositeCheckDigit1: Swift.String) throws
+  var compositeCheckDigit1Image: CoreGraphics.CGImage? { get }
+  var isCompositeCheckDigit1ScoreHigh: Swift.Bool { get }
+  var isCompositeCheckDigit1Correct: Swift.Bool { get }
+  var dateOfExpiry: Swift.String { get }
+  mutating func setDateOfExpiry(_ dateOfExpiry: Swift.String) throws
+  var dateOfExpiryImage: CoreGraphics.CGImage? { get }
+  var isDateOfExpiryScoreHigh: Swift.Bool { get }
+  var lastName: Swift.String { get }
+  mutating func setLastName(_ lastName: Swift.String) throws
+  var lastNameImage: CoreGraphics.CGImage? { get }
+  var isLastNameScoreHigh: Swift.Bool { get }
+}
+extension ReadID.EDLFraData {
+  public func assumptionsCorrect() -> Swift.Bool
+}
+public protocol Image {
+  var imageData: Foundation.Data? { get }
+  var isRenderable: Swift.Bool { get }
+  func getImage(image: @escaping (UIKit.UIImage?, Swift.Error?) -> ())
+}
+@_hasMissingDesignatedInitializers public class VIZQRCodeSession {
+  public enum QRCodeType : Swift.String {
+    case DutchBSN
+    case Unknown
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var qrCodeResult: Swift.String
+  public var qrCodeType: ReadID.VIZQRCodeSession.QRCodeType
+  @objc deinit
+}
+final public class TD3DataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.TD3Data?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.TD3Data?
+  @objc deinit
+}
+public struct ConsolidatedIdentityData {
+  public enum Status : Swift.String {
+    case SUCCEEDED
+    case FAILED
+    case NOT_CHECKED
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum MandatoryStatus : Swift.String {
+    case SUCCEEDED
+    case FAILED
+    case PENDING
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum OptionalStatus : Swift.String {
+    case SUCCEEDED
+    case FAILED
+    case NOT_CHECKED
+    case NOT_AVAILABLE
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum ApprovalStatus : Swift.String {
+    case DISAPPROVED_AUTOMATIC
+    case DISAPPROVED_MANUAL
+    case APPROVED_AUTOMATIC
+    case APPROVED_MANUAL
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum SourceType : Swift.String {
+    case VISUAL_AUTOMATIC
+    case VISUAL_MANUAL
+    case CHIP
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public struct Source {
+  }
+  public var documentCode: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var documentNumber: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var dateOfExpiry: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var issuingCountry: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var primaryIdentifier: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var secondaryIdentifier: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var nameOfHolder: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var personalNumber: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var placeOfBirth: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var dateOfBirth: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var gender: ReadID.ConsolidatedValue<ReadID.Gender> {
+    get
+  }
+  public var nationality: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+  public var chipVerification: ReadID.ConsolidatedValue<ReadID.ConsolidatedIdentityData.Status> {
+    get
+  }
+  public var chipCloneDetection: ReadID.ConsolidatedValue<ReadID.ConsolidatedIdentityData.OptionalStatus> {
+    get
+  }
+  public var visualVerification: ReadID.ConsolidatedValue<ReadID.ConsolidatedIdentityData.ApprovalStatus> {
+    get
+  }
+  public var selfieVerificationStatus: ReadID.ConsolidatedValue<ReadID.ConsolidatedIdentityData.MandatoryStatus> {
+    get
+  }
+  public var selfieVerificationProfile: ReadID.ConsolidatedValue<Swift.String> {
+    get
+  }
+}
+@objc public protocol VIZProgressIndicator {
+  @objc func updateCaptureProgress(_ progress: Swift.Float)
+}
+public struct CAResult {
+  public var encryptedResponseBytes: Foundation.Data? {
+    get
+  }
+  public init(parameters: ReadID.CAParameters)
+}
+public struct OnfidoCheck : Swift.Decodable {
+  public let status: ReadID.OnfidoCheckStatus?
+  public let result: ReadID.OnfidoResult?
+  public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class VIZSimulatorConfiguration {
+  public static var record: Swift.Bool
+  public static var cameraSimulationMovie: Foundation.URL?
+  @objc deinit
+}
+final public class AllDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.MRZData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.MRZData?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class CSCAMasterList : ReadID.CertificateStore {
+  public init(fromData: Foundation.Data, verifyUsing certificate: ReadID.X509Certificate) throws
+  convenience public init?(bundle: Foundation.Bundle = Bundle.main, masterListFile: Swift.String, certificateFile: Swift.String) throws
+  @objc deinit
+}
+public protocol TDData : ReadID.MRZData {
+  var documentCode: Swift.String { get }
+  mutating func setDocumentCode(_ documentCode: Swift.String) throws
+  var isDocumentCodeScoreHigh: Swift.Bool { get }
+  var issuingCountry: Swift.String { get }
+  mutating func setIssuingCountry(_ issuingCountry: Swift.String) throws
+  var isIssuingCountryScoreHigh: Swift.Bool { get }
+  var documentNumber: Swift.String { get }
+  mutating func setDocumentNumber(_ documentNumber: Swift.String) throws
+  var isDocumentNumberScoreHigh: Swift.Bool { get }
+  var documentNumberCheckDigit: Swift.String { get }
+  mutating func setDocumentNumberCheckDigit(_ documentNumberCheckDigit: Swift.String) throws
+  var isDocumentNumberCheckDigitScoreHigh: Swift.Bool { get }
+  var isDocumentNumberCheckDigitCorrect: Swift.Bool { get }
+  var optionalData: Swift.String { get }
+  mutating func setOptionalData(_ optionalData: Swift.String) throws
+  var isOptionalDataScoreHigh: Swift.Bool { get }
+  var dateOfBirth: Swift.String { get }
+  mutating func setDateOfBirth(_ dateOfBirth: Swift.String) throws
+  var isDateOfBirthScoreHigh: Swift.Bool { get }
+  var dateOfBirthCheckDigit: Swift.String { get }
+  mutating func setDateOfBirthCheckDigit(_ dateOfBirthCheckDigit: Swift.String) throws
+  var isDateOfBirthCheckDigitScoreHigh: Swift.Bool { get }
+  var isDateOfBirthCheckDigitCorrect: Swift.Bool { get }
+  var gender: Swift.String { get }
+  mutating func setGender(_ gender: Swift.String) throws
+  var isGenderScoreHigh: Swift.Bool { get }
+  var dateOfExpiry: Swift.String { get }
+  mutating func setDateOfExpiry(_ dateOfExpiry: Swift.String) throws
+  var isDateOfExpiryScoreHigh: Swift.Bool { get }
+  var dateOfExpiryCheckDigit: Swift.String { get }
+  mutating func setDateOfExpiryCheckDigit(_ dateOfExpiryCheckDigit: Swift.String) throws
+  var isDateOfExpiryCheckDigitScoreHigh: Swift.Bool { get }
+  var isDateOfExpiryCheckDigitCorrect: Swift.Bool { get }
+  var nationality: Swift.String { get }
+  mutating func setNationality(_ nationality: Swift.String) throws
+  var isNationalityScoreHigh: Swift.Bool { get }
+  var name: Swift.String { get }
+  mutating func setName(_ name: Swift.String) throws
+  var lastName: Swift.String { get }
+  mutating func setLastName(_ lastName: Swift.String) throws
+  var isLastNameScoreHigh: Swift.Bool { get }
+  var firstName: Swift.String { get }
+  mutating func setFirstName(_ firstName: Swift.String) throws
+  var isFirstNameScoreHigh: Swift.Bool { get }
+  var documentCodeImage: CoreGraphics.CGImage? { get }
+  var nationalityImage: CoreGraphics.CGImage? { get }
+  var issuingCountryImage: CoreGraphics.CGImage? { get }
+  var documentNumberImage: CoreGraphics.CGImage? { get }
+  var documentNumberCheckDigitImage: CoreGraphics.CGImage? { get }
+  var dateOfBirthImage: CoreGraphics.CGImage? { get }
+  var dateOfBirthCheckDigitImage: CoreGraphics.CGImage? { get }
+  var dateOfExpiryImage: CoreGraphics.CGImage? { get }
+  var dateOfExpiryCheckDigitImage: CoreGraphics.CGImage? { get }
+  var genderImage: CoreGraphics.CGImage? { get }
+  var optionalDataImage: CoreGraphics.CGImage? { get }
+  var nameImage: CoreGraphics.CGImage? { get }
+  var firstNameImage: CoreGraphics.CGImage? { get }
+  var lastNameImage: CoreGraphics.CGImage? { get }
+}
+extension ReadID.TDData {
+  public func assumptionsCorrect() -> Swift.Bool
+}
+public protocol VehicleData : ReadID.MRZData {
+}
+public struct VeriffVerification : Swift.Decodable {
+  public let status: Swift.String
+  public let reason: Swift.String?
+  public let reasonCode: Swift.Int?
+  public init(status: Swift.String, reason: Swift.String?, reasonCode: Swift.Int?)
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum NFCError : Swift.Error {
+  case AdapterNotFound
+  case OperationNotSupported
+  case TransceiveError
+  case TransceiveTimeout
+  case TagConnectionLost(willAttemptResume: Swift.Bool)
+  case IncompatibleCommand
+  case SecurityStatusNotSatisfied
+  case CommandNotAllowed
+  case FunctionNotSupported
+  case FileNotFound
+  case WrongParameters
+  case UnknownStatusWord
+}
+@_hasMissingDesignatedInitializers public class ThreadsafeLog {
+  @objc deinit
+}
+extension ReadID.ThreadsafeLog {
+  public func reset(string: Swift.String)
+}
+@available(iOS 13, *)
+public protocol Commitable {
+  func commit(completionHandler: @escaping (ReadID.ReadIDSession?, Swift.Error?) -> ()) throws
+}
+public enum State : Swift.String, Swift.Decodable {
+  case initialized
+  case inProgress
+  case awaitingResult
+  case complete
+  case error
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum SessionError : Swift.Error {
+  case SessionReuse
+  case InvalidMemento
+  public static func == (a: ReadID.SessionError, b: ReadID.SessionError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension ReadID.SessionError {
+  public var localizedDescription: Swift.String {
+    get
+  }
+}
+public struct VerificationStatus {
+  public typealias CertificateChain = [ReadID.X509Certificate]
+  public typealias ReasonedVerdict = (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode)
+  public typealias ReasonedVerdictResult<T> = (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode, result: T)
+  public var aa: (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode, result: ReadID.ActiveAuthenticationResult?) {
+    get
+  }
+  public var eacCA: (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode, result: ReadID.CAResult?)
+  public var cs: (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode, result: ReadID.VerificationStatus.CertificateChain) {
+    get
+  }
+  public var ds: (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode) {
+    get
+  }
+  public var ht: (verdict: ReadID.VerificationStatus.Verdict, reason: ReadID.VerificationStatus.ReasonCode, result: [ReadID.Files : ReadID.HashMatchResult]) {
+    get
+  }
+  public enum Verdict {
+    case Unknown
+    case NotPresent
+    case PresentNotChecked
+    case PresentFailed
+    case PresentSucceeded
+    public var present: Swift.Bool {
+      get
+    }
+    public var succeeded: Swift.Bool {
+      get
+    }
+    public static func == (a: ReadID.VerificationStatus.Verdict, b: ReadID.VerificationStatus.Verdict) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ReasonCode {
+    case Unknown
+    case Succeeded
+    case NotSupported
+    case PresenceDetected
+    case UnexpectedExceptionFailure
+    case UnsupportedKeyTypeFailure
+    case SignatureChecked
+    case SignatureFailure
+    case ReadErrorConfigurationFailure
+    case ReadErrorSODFailure
+    case FoundAChainSucceeded
+    case CouldNotBuildChainFailure
+    case NoCSCATrustAnchorsFoundFailure
+    case StoredHashNotFoundFailure
+    case UnsupportedDigestAlgorithmFailure
+    case UnsupportedSignatureAlgorithmFailure
+    case AllHashesMatch
+    case HashMismatchFailure
+    case NonMatchAlert
+    case NoVerifier
+    case CertificateExpired
+    public static func == (a: ReadID.VerificationStatus.ReasonCode, b: ReadID.VerificationStatus.ReasonCode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+}
+public struct IProovResult<T> : Swift.Decodable where T : Swift.Decodable {
+  public let state: ReadID.State
+  public let error: ReadID.ErrorResponse?
+  public let response: T?
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum ExtendedLengthAPDUPreference : Swift.CustomStringConvertible {
+  case Auto
+  case Disabled
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: ReadID.ExtendedLengthAPDUPreference, b: ReadID.ExtendedLengthAPDUPreference) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class VehicleFraDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.VehicleFraData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.VehicleFraData?
+  @objc deinit
+}
+public protocol MachineReadableZone : AnyObject {
+  var source: ReadID.MachineReadableZoneSource { get }
+  var lines: [Swift.String] { get set }
+  var scores: [[Swift.Float]] { get }
+  var lineCount: Swift.Int { get }
+  var lineWidth: Swift.Int { get }
+}
+public enum MachineReadableZoneSource {
+  case ReadID_VIZ
+  case ReadID_MRZ
+  case ICAO_DG1
+  case String
+  public static func == (a: ReadID.MachineReadableZoneSource, b: ReadID.MachineReadableZoneSource) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol ImageBackedMachineReadableZone : ReadID.MachineReadableZone {
+  func getCrop(column: Swift.Int, line: Swift.Int, width: Swift.Int, height: Swift.Int) -> CoreGraphics.CGImage?
+}
+final public class AllTDDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.TDData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.TDData?
+  @objc deinit
+}
+indirect public enum Log : Swift.ExpressibleByStringLiteral, Swift.ExpressibleByStringInterpolation, Swift.CustomStringConvertible {
+  public typealias StringLiteralType = Swift.String
+  public static var logToConsole: Swift.Bool
+  case Line(timestamp: Foundation.Date, Swift.String)
+  case Lines([ReadID.Log])
+  case SubTask(timestamp: Foundation.Date, name: Swift.String, log: ReadID.Log)
+  case Exception(timestamp: Foundation.Date, error: Swift.Error)
+  public init(stringLiteral: Swift.String)
+  public var description: Swift.String {
+    get
+  }
+  public var exceptions: [Swift.Error] {
+    get
+  }
+  public typealias ExtendedGraphemeClusterLiteralType = ReadID.Log.StringLiteralType
+  public typealias StringInterpolation = Swift.DefaultStringInterpolation
+  public typealias UnicodeScalarLiteralType = ReadID.Log.StringLiteralType
+}
+extension ReadID.CaptureResult {
+  public func extractFeature(_ feature: ReadID.Feature) -> UIKit.UIImage?
+}
+public enum SessionType : Swift.String {
+  case standard
+  case light
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol VisualDocumentCapture {
+  func capturePage(pageConfiguration: ReadID.PageCaptureConfiguration, alternativePageConfigurations: [ReadID.PageCaptureConfiguration]?, captureConfiguration: ReadID.CaptureRequestConfiguration, session: ReadID.ReadIDSession, callback: @escaping ReadID.VisualDocumentCaptureCallback)
+  func cancelPageCapture()
+}
+extension ReadID.VisualDocumentCapture {
+  public func capturePage(pageConfiguration: ReadID.PageCaptureConfiguration, captureConfiguration: ReadID.CaptureRequestConfiguration, session: ReadID.ReadIDSession, callback: @escaping ReadID.VisualDocumentCaptureCallback)
+}
+public typealias VisualDocumentCaptureCallback = (ReadID.Capture) -> Swift.Void
+public enum QualityAssessment {
+  case noQualityProblems
+  case tooFarFromCamera
+  case glareOnDocument
+  case fingerOnDocument
+  case noMRZFound
+  case noQRCodeFound
+  case noFaceImageFound
+  case outOfFocus
+  public static func == (a: ReadID.QualityAssessment, b: ReadID.QualityAssessment) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol VisualDocumentCaptureDelegate {
+  func captureStatusUpdated(detectedDocument: ReadID.PageCaptureConfiguration?, quality: ReadID.QualityAssessment?)
+}
+public struct CaptureRequestConfiguration : Swift.Equatable {
+  public let description: Swift.String
+  public let captureOptions: ReadID.CaptureRequestOptions
+  public let mrzValidation: ReadID.MRZValidation
+  public let allowManualCaptureAfter: CoreFoundation.CFTimeInterval?
+  public init(description: Swift.String, captureOptions: ReadID.CaptureRequestOptions, mrzValidation: ReadID.MRZValidation, allowManualCaptureAfter: CoreFoundation.CFTimeInterval?)
+  public static let defaultAuto: ReadID.CaptureRequestConfiguration
+  public static let allowManual: ReadID.CaptureRequestConfiguration
+  public static let accessControl: ReadID.CaptureRequestConfiguration
+  public static func == (a: ReadID.CaptureRequestConfiguration, b: ReadID.CaptureRequestConfiguration) -> Swift.Bool
+}
+public enum MRZValidation : Swift.String {
+  case NoValidation
+  case AccessControl
+  case Full
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum QRCodeValidation : Swift.String {
+  case NoValidation
+  case DutchBSN
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct CaptureRequestOptions : Swift.OptionSet {
+  public let rawValue: Swift.Int
+  public init(rawValue: Swift.Int)
+  public static let requireSharpImage: ReadID.CaptureRequestOptions
+  public static let requireNoGlareOnDocument: ReadID.CaptureRequestOptions
+  public static let requireNoFingerOnDocument: ReadID.CaptureRequestOptions
+  public static let requireMRZ: ReadID.CaptureRequestOptions
+  public static let requireFaceImage: ReadID.CaptureRequestOptions
+  public static let requireQRCode: ReadID.CaptureRequestOptions
+  public static let allowLoweringQualityRequirements: ReadID.CaptureRequestOptions
+  public static let allowDisregardingMRZRequirement: ReadID.CaptureRequestOptions
+  public static let allowDisregardingFaceImageRequirement: ReadID.CaptureRequestOptions
+  public static let allowDisregardingQRCodeRequirement: ReadID.CaptureRequestOptions
+  public static let fastCaptureMode: ReadID.CaptureRequestOptions
+  public typealias ArrayLiteralElement = ReadID.CaptureRequestOptions
+  public typealias Element = ReadID.CaptureRequestOptions
+  public typealias RawValue = Swift.Int
+}
+public protocol Capture {
+  var completion: ReadID.CaptureCompletion { get }
+  var captureRequestConfiguration: ReadID.CaptureRequestConfiguration { get }
+  var allowedPageConfigurations: [ReadID.PageCaptureConfiguration] { get }
+}
+public enum CaptureCompletion : Swift.CustomStringConvertible {
+  case Success(result: ReadID.CaptureResult)
+  case Cancelled
+  case Failure(cause: Swift.Error?)
+  public var description: Swift.String {
+    get
+  }
+}
+public struct CaptureResult {
+  public let captureMode: ReadID.CaptureMode
+  public let pageCaptureConfiguration: ReadID.PageCaptureConfiguration?
+  public let documentImage: UIKit.UIImage
+  public let features: ReadID.Features?
+  public let qualityCriteria: ReadID.QualityCriteria?
+  public let ocrResult: ReadID.MachineReadableZone?
+  public let qrCodeResult: ReadID.QRCodeResult?
+  public let numberOfFullResAttempts: Swift.Int
+}
+public struct QRCodeResult {
+  public let validator: ReadID.QRCodeValidation
+  public let value: Swift.String
+}
+public enum CaptureMode : Swift.String {
+  case Automatic
+  case AutomaticDegraded
+  case Manual
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct QualityCriteria {
+  public let sharpImage: ReadID.QualityCriterion
+  public let noGlare: ReadID.QualityCriterion
+  public let noFinger: ReadID.QualityCriterion
+}
+public struct QualityCriterion {
+  public let required: Swift.Bool
+  public let result: ReadID.QualityCriterionResult
+}
+public enum QualityCriterionResult : Swift.String {
+  case passed
+  case failed
+  case degraded
+  case disabled
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct Features {
+  public let document: ReadID.Feature
+  public let mrz: ReadID.Feature
+  public let faceImage: ReadID.Feature
+  public let qrCode: ReadID.Feature
+}
+public struct Feature {
+  public let required: Swift.Bool
+  public let result: ReadID.FeatureRequirementResult
+  public let coordinates: CoreFoundation.CGRect?
+}
+public enum FeatureRequirementResult : Swift.String {
+  case passed
+  case failed
+  case degraded
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct MRZSize : Swift.ExpressibleByStringLiteral, Swift.Equatable {
+  public typealias StringLiteralType = Swift.String
+  public let rows: Swift.UInt
+  public let cols: Swift.UInt
+  public init(stringLiteral value: Swift.String)
+  public init(lines: Swift.UInt, columns: Swift.UInt)
+  public static func == (a: ReadID.MRZSize, b: ReadID.MRZSize) -> Swift.Bool
+  public typealias ExtendedGraphemeClusterLiteralType = ReadID.MRZSize.StringLiteralType
+  public typealias UnicodeScalarLiteralType = ReadID.MRZSize.StringLiteralType
+}
+public enum MRZValidator : Swift.Int, Swift.Codable, Swift.CustomStringConvertible {
+  case ICAO
+  case EDL
+  case CNIS
+  public var description: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum PageType : Swift.Int {
+  case front
+  case back
+  case custom
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct PageCaptureConfiguration : Swift.Equatable {
+  public let description: Swift.String
+  public let captureOptions: ReadID.PageCaptureOptions
+  public let pageMetrics: ReadID.PageMetrics
+  public let pageType: ReadID.PageType
+  public let mrzValidator: ReadID.MRZValidator?
+  public let qrCodeValidation: ReadID.QRCodeValidation
+  public init(_ description: Swift.String, captureOptions: ReadID.PageCaptureOptions, pageMetrics: ReadID.PageMetrics, pageType: ReadID.PageType, mrzValidator: ReadID.MRZValidator? = nil, qrCodeValidation: ReadID.QRCodeValidation = .NoValidation)
+  public static let passportDataPageFront: ReadID.PageCaptureConfiguration
+  public static let passportDataPageBack: ReadID.PageCaptureConfiguration
+  public static let identityCardTD2Front: ReadID.PageCaptureConfiguration
+  public static let identityCardTD2Back: ReadID.PageCaptureConfiguration
+  public static let identityCardTD1Front: ReadID.PageCaptureConfiguration
+  public static let identityCardTD1Back: ReadID.PageCaptureConfiguration
+  public static let machineReadableVisaTypeA: ReadID.PageCaptureConfiguration
+  public static let machineReadableVisaTypeB: ReadID.PageCaptureConfiguration
+  public static let drivingLicenceFront: ReadID.PageCaptureConfiguration
+  public static let EUdrivingLicenceFront: ReadID.PageCaptureConfiguration
+  public static let drivingLicenceBack: ReadID.PageCaptureConfiguration
+  public static let CNISFront: ReadID.PageCaptureConfiguration
+  public static let CNISBack: ReadID.PageCaptureConfiguration
+  public static func == (a: ReadID.PageCaptureConfiguration, b: ReadID.PageCaptureConfiguration) -> Swift.Bool
+}
+public struct PageCaptureOptions : Swift.OptionSet {
+  public let rawValue: Swift.Int
+  public init(rawValue: Swift.Int)
+  public static let hasMRZ: ReadID.PageCaptureOptions
+  public static let hasFaceImage: ReadID.PageCaptureOptions
+  public static let hasQRCode: ReadID.PageCaptureOptions
+  public typealias ArrayLiteralElement = ReadID.PageCaptureOptions
+  public typealias Element = ReadID.PageCaptureOptions
+  public typealias RawValue = Swift.Int
+}
+public struct PageMetrics : Swift.Equatable {
+  public let description: Swift.String
+  public let aspectRatio: Swift.ClosedRange<Swift.Double>
+  public let physicalSize: CoreFoundation.CGSize
+  public let mrzLocation: CoreFoundation.CGRect?
+  public let faceImageSize: CoreFoundation.CGSize?
+  public let faceImageZone: CoreFoundation.CGRect?
+  public let allowedMRZSizes: [ReadID.MRZSize]?
+  public let minMRZCharacterSize: CoreFoundation.CGSize?
+  public let maxMRZCharacterSize: CoreFoundation.CGSize?
+  public init(description: Swift.String, aspectRatio: Swift.ClosedRange<Swift.Double>, physicalSize: CoreFoundation.CGSize, mrzLocation: CoreFoundation.CGRect? = nil, faceImageSize: CoreFoundation.CGSize? = nil, faceImageZone: CoreFoundation.CGRect? = nil, allowedMRZSizes: [ReadID.MRZSize]? = nil, minMRZCharacterSize: CoreFoundation.CGSize? = nil, maxMRZCharacterSize: CoreFoundation.CGSize? = nil)
+  public static let ICAO_TD1: ReadID.PageMetrics
+  public static let ICAO_TD2: ReadID.PageMetrics
+  public static let ICAO_TD3: ReadID.PageMetrics
+  public static let ICAO_MRV_A: ReadID.PageMetrics
+  public static let ICAO_MRV_B: ReadID.PageMetrics
+  public static let EU_EDL: ReadID.PageMetrics
+  public static let CNIS: ReadID.PageMetrics
+  public static func == (a: ReadID.PageMetrics, b: ReadID.PageMetrics) -> Swift.Bool
+}
+@available(iOS 13, *)
+public enum ExtendedLengthSupport : Swift.String {
+  case disabled
+  case enabled
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct OnfidoReport : Swift.Decodable {
+  public let status: ReadID.OnfidoReportStatus?
+  public let result: ReadID.OnfidoResult?
+  public init(from decoder: Swift.Decoder) throws
+}
+final public class AllVehicleDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.VehicleData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.VehicleData?
+  @objc deinit
+}
+final public class MRVBDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.MRVBData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.MRVBData?
+  @objc deinit
+}
+final public class MRVADataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.MRVAData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.MRVAData?
+  @objc deinit
+}
+public struct PACEInfo : Swift.Equatable {
+  public static func == (a: ReadID.PACEInfo, b: ReadID.PACEInfo) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class OCRSession {
+  public var type: ReadID.OCRSession.MRZType? {
+    get
+  }
+  public var mrz: Swift.String? {
+    get
+  }
+  public var mrzImage: ReadID.Image? {
+    get
+  }
+  public enum MRZType : Swift.String {
+    case TD1
+    case TD2
+    case TD3
+    case EDL
+    case CUSTOM
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @objc deinit
+}
+public enum OnfidoResult : Swift.String, Swift.Decodable {
+  case clear
+  case consider
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum OnfidoCheckStatus : Swift.String, Swift.Decodable {
+  case awaitingApproval
+  case complete
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum OnfidoReportStatus : Swift.String, Swift.Decodable {
+  case awaitingData
+  case inProgress
+  case complete
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct VerifyToken {
+  public let sessionId: Swift.String
+  public let verifyToken: Swift.String
+  public let riskProfile: Swift.String?
+  public let attemptsLeft: Swift.Int
+}
+extension ReadID.MRZSize : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ReadID.PageCaptureOptions : Swift.Codable {
+}
+extension ReadID.MRZValidator : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.MRZValidator]
+  public static var allCases: [ReadID.MRZValidator]
+}
+extension ReadID.CaptureRequestConfiguration : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.CaptureRequestConfiguration]
+  public static var allCases: ReadID.CaptureRequestConfiguration.AllCases
+}
+extension ReadID.CaptureRequestConfiguration : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ReadID.PageType : Swift.Codable {
+}
+extension ReadID.MRZValidation : Swift.Codable {
+}
+extension ReadID.QRCodeValidation : Swift.Codable {
+}
+extension ReadID.CaptureRequestOptions : Swift.Codable {
+}
+extension ReadID.PageType : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension ReadID.MRZValidation : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension ReadID.PageCaptureConfiguration : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.PageCaptureConfiguration]
+  public static var allCases: ReadID.PageCaptureConfiguration.AllCases
+}
+extension ReadID.PageCaptureConfiguration : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ReadID.PageType : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.PageType]
+  public static var allCases: [ReadID.PageType]
+}
+extension ReadID.PageMetrics : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.PageMetrics]
+  public static var allCases: [ReadID.PageMetrics]
+}
+extension ReadID.MRZValidation : Swift.CaseIterable {
+  public typealias AllCases = [ReadID.MRZValidation]
+  public static var allCases: [ReadID.MRZValidation]
+}
+extension ReadID.PageMetrics : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol MRVAData : ReadID.TDData {
+}
+@available(iOS 13, *)
+public protocol MRTDListener : AnyObject {
+  func nfcSessionStarted()
+  func nfcSessionFinished()
+  func tagFound()
+  func documentStart()
+  func accessControlStart()
+  func accessControlFinished(accessControlStatus: ReadID.AccessControlStatus)
+  func LDSStart(totalSize: Swift.UInt)
+  func fileStart(file: ReadID.File, fileSize: Swift.UInt)
+  func fileProgress(file: ReadID.File, bytesRead: Swift.UInt, bytesTotal: Swift.UInt, ldsRead: Swift.UInt, ldsTotal: Swift.UInt)
+  func fileFinished(file: ReadID.File, bytesRead: Swift.UInt, bytesTotal: Swift.UInt, ldsRead: Swift.UInt, ldsTotal: Swift.UInt, operationResult: ReadID.OperationResult)
+  func verificationStart()
+  func LDSFinished(operationResult: ReadID.OperationResult)
+  func verificationFinished(verificationStatus: ReadID.VerificationStatus)
+  func documentFinished(readIDSession: ReadID.ReadIDSession, operationResult: ReadID.OperationResult)
+  func readingCancelled(reason: ReadID.CancelReason)
+}
+@_hasMissingDesignatedInitializers public class ICAODocumentContent : ReadID.MRTDDocumentContent {
+  public var unicodeVersion: Swift.String? {
+    get
+  }
+  public var gender: ReadID.Gender? {
+    get
+  }
+  public var nationality: Swift.String? {
+    get
+  }
+  public var interpretedNationality: Swift.String? {
+    get
+  }
+  public var documentCode: Swift.String? {
+    get
+  }
+  public var mrzString: Swift.String? {
+    get
+  }
+  public var mrzPrimaryIdentifier: Swift.String? {
+    get
+  }
+  public var mrzSecondaryIdentifier: Swift.String? {
+    get
+  }
+  public var custodian: Swift.String? {
+    get
+  }
+  public var otherNames: [Swift.String] {
+    get
+  }
+  public var permanentAddress: [Swift.String] {
+    get
+  }
+  public var placeOfBirth: [Swift.String] {
+    get
+  }
+  public var profession: Swift.String? {
+    get
+  }
+  public var telephone: Swift.String? {
+    get
+  }
+  public var title: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+public enum Gender : Swift.String {
+  case MALE
+  case FEMALE
+  case UNKNOWN
+  case UNSPECIFIED
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class MRTDDocumentContent {
+  public var nameOfHolder: Swift.String?
+  public var primaryIdentifier: Swift.String? {
+    get
+  }
+  public var secondaryIdentifier: Swift.String? {
+    get
+  }
+  public var dateOfBirth: Swift.String? {
+    get
+  }
+  public var fullDateOfBirth: Foundation.Date? {
+    get
+  }
+  public var interpretedDateOfBirth: Swift.String? {
+    get
+  }
+  public var dateOfExpiry: Swift.String? {
+    get
+  }
+  public var dateOfIssue: Swift.String? {
+    get
+  }
+  public var interpretedDateOfIssue: Swift.String? {
+    get
+  }
+  public var interpretedDateOfExpiry: Swift.String? {
+    get
+  }
+  public var documentNumber: Swift.String? {
+    get
+  }
+  public var personalNumber: Swift.String? {
+    get
+  }
+  public var issuingCountry: Swift.String? {
+    get
+  }
+  public var interpretedIssuingCountry: Swift.String? {
+    get
+  }
+  public var signatureImages: [ReadID.Image] {
+    get
+  }
+  public var faceImages: [ReadID.Image] {
+    get
+  }
+  public var documentType: ReadID.DocumentType? {
+    get
+  }
+  public var dataGroupNumbers: [Swift.Int] {
+    get
+  }
+  public var ldsVersion: Swift.String? {
+    get
+  }
+  public var issuingAuthority: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+public enum AccessControlCredentials : Swift.CustomStringConvertible {
+  case NoCredentials
+  case BasicAccessControl(documentNumber: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String)
+  case CardAccessNumber(Swift.String)
+  case BasicAccessProtection(Swift.String)
+  case MachineReadableZoneData(ReadID.MRZData)
+  public var description: Swift.String {
+    get
+  }
+}
+final public class EDLFraDataFactory {
+  public init()
+  final public func canCreate(mrz: ReadID.MachineReadableZone) -> Swift.Bool
+  final public func create(mrz: ReadID.MachineReadableZone, enableAssumptions: Swift.Bool) -> ReadID.EDLFraData?
+  final public func create(mrz: ReadID.MachineReadableZone) -> ReadID.EDLFraData?
+  @objc deinit
+}
+@available(iOS 13, *)
+public protocol PACEProtocolPriority {
+  func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+}
+@available(iOS 13, *)
+public enum PACEAgreementTypePriority : ReadID.PACEProtocolPriority {
+  case PreferECDHOverDH
+  case PreferDHOverECDH
+  public func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+  public static func == (a: ReadID.PACEAgreementTypePriority, b: ReadID.PACEAgreementTypePriority) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+public enum PACEMappingTypePriority : ReadID.PACEProtocolPriority {
+  case PreferCAMOverGMOverIM
+  case PreferCAMOverIMOverGM
+  case PreferGMOverIMOverCAM
+  case PreferGMOVerCAMOverIM
+  case PreferIMOVerGMOverCAM
+  case PreferIMOVerCAMOverGM
+  public func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+  public static func == (a: ReadID.PACEMappingTypePriority, b: ReadID.PACEMappingTypePriority) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+public enum PACESecureMessagingTypePriority : ReadID.PACEProtocolPriority {
+  case PreferTripleDESOverAES
+  case PreferAESOverTripleDES
+  public func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+  public static func == (a: ReadID.PACESecureMessagingTypePriority, b: ReadID.PACESecureMessagingTypePriority) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+public enum PACEKeyLengthPriority : ReadID.PACEProtocolPriority {
+  case PreferLongerKeys
+  case PreferShorterKeys
+  public func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+  public static func == (a: ReadID.PACEKeyLengthPriority, b: ReadID.PACEKeyLengthPriority) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@available(iOS 13, *)
+public struct CompositePACEProtocolPriority : ReadID.PACEProtocolPriority, Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = ReadID.PACEProtocolPriority
+  public init(arrayLiteral elements: ReadID.PACEProtocolPriority...)
+  public func areInIncreasingOrder(_ first: ReadID.PACEInfo, _ second: ReadID.PACEInfo) -> Swift.Bool
+}
+public struct RetrieveIProovVerifyTokenResponse : Swift.Decodable {
+  public let verifyToken: Swift.String
+  public let pod: Swift.String?
+  public let riskProfile: Swift.String?
+  public let attemptsLeft: Swift.Int
+  public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class CAParameters {
+  convenience public init(keyId: Foundation.Data?, oid: Swift.String, ephemeralPublicKey: Swift.OpaquePointer!, challenge: Foundation.Data) throws
+  @objc deinit
+}
+extension ReadID.NFCLocation : Swift.Equatable {}
+extension ReadID.NFCLocation : Swift.Hashable {}
+extension ReadID.NFCLocation : Swift.RawRepresentable {}
+extension ReadID.AccessControlOption : Swift.Equatable {}
+extension ReadID.AccessControlOption : Swift.Hashable {}
+extension ReadID.NFCChipSupport : Swift.Equatable {}
+extension ReadID.NFCChipSupport : Swift.Hashable {}
+extension ReadID.NFCChipSupport : Swift.RawRepresentable {}
+extension ReadID.AdapterStatus : Swift.Equatable {}
+extension ReadID.AdapterStatus : Swift.Hashable {}
+extension ReadID.AccessControlStatus.Verdict : Swift.Equatable {}
+extension ReadID.AccessControlStatus.Verdict : Swift.Hashable {}
+extension ReadID.AccessControlStatus.ReasonCode : Swift.Equatable {}
+extension ReadID.AccessControlStatus.ReasonCode : Swift.Hashable {}
+extension ReadID.SessionKind : Swift.Equatable {}
+extension ReadID.SessionKind : Swift.Hashable {}
+extension ReadID.SessionKind : Swift.RawRepresentable {}
+@available(iOS 13, *)
+extension ReadID.CancelReason : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.CancelReason : Swift.Hashable {}
+extension ReadID.MRZValidator : Swift.Equatable {}
+extension ReadID.MRZValidator : Swift.Hashable {}
+extension ReadID.MRZValidator : Swift.RawRepresentable {}
+extension ReadID.ImageInformation.FaceImageType : Swift.Equatable {}
+extension ReadID.ImageInformation.FaceImageType : Swift.Hashable {}
+extension ReadID.ImageInformation.FaceImageType : Swift.RawRepresentable {}
+extension ReadID.ImageInformation.DataType : Swift.Equatable {}
+extension ReadID.ImageInformation.DataType : Swift.Hashable {}
+extension ReadID.ImageInformation.DataType : Swift.RawRepresentable {}
+extension ReadID.ImageInformation.ColorSpace : Swift.Equatable {}
+extension ReadID.ImageInformation.ColorSpace : Swift.Hashable {}
+extension ReadID.ImageInformation.ColorSpace : Swift.RawRepresentable {}
+extension ReadID.ImageInformation.SourceType : Swift.Equatable {}
+extension ReadID.ImageInformation.SourceType : Swift.Hashable {}
+extension ReadID.ImageInformation.SourceType : Swift.RawRepresentable {}
+extension ReadID.DocumentType : Swift.Equatable {}
+extension ReadID.DocumentType : Swift.Hashable {}
+extension ReadID.DocumentType : Swift.RawRepresentable {}
+extension ReadID.PublicKey.KeyType : Swift.Equatable {}
+extension ReadID.PublicKey.KeyType : Swift.Hashable {}
+extension ReadID.PublicKey.KeyType : Swift.RawRepresentable {}
+extension ReadID.SessionManagerErrors : Swift.Equatable {}
+extension ReadID.SessionManagerErrors : Swift.Hashable {}
+@available(iOS 13, *)
+extension ReadID.MRTDError : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.MRTDError : Swift.Hashable {}
+extension ReadID.Files : Swift.Equatable {}
+extension ReadID.Files : Swift.Hashable {}
+extension ReadID.Files : Swift.RawRepresentable {}
+extension ReadID.Application : Swift.Equatable {}
+extension ReadID.Application : Swift.Hashable {}
+extension ReadID.Application : Swift.RawRepresentable {}
+extension ReadID.VIZQRCodeSession.QRCodeType : Swift.Equatable {}
+extension ReadID.VIZQRCodeSession.QRCodeType : Swift.Hashable {}
+extension ReadID.VIZQRCodeSession.QRCodeType : Swift.RawRepresentable {}
+extension ReadID.QRCodeValidation : Swift.Equatable {}
+extension ReadID.QRCodeValidation : Swift.Hashable {}
+extension ReadID.QRCodeValidation : Swift.RawRepresentable {}
+extension ReadID.ConsolidatedIdentityData.Status : Swift.Equatable {}
+extension ReadID.ConsolidatedIdentityData.Status : Swift.Hashable {}
+extension ReadID.ConsolidatedIdentityData.Status : Swift.RawRepresentable {}
+extension ReadID.ConsolidatedIdentityData.MandatoryStatus : Swift.Equatable {}
+extension ReadID.ConsolidatedIdentityData.MandatoryStatus : Swift.Hashable {}
+extension ReadID.ConsolidatedIdentityData.MandatoryStatus : Swift.RawRepresentable {}
+extension ReadID.ConsolidatedIdentityData.OptionalStatus : Swift.Equatable {}
+extension ReadID.ConsolidatedIdentityData.OptionalStatus : Swift.Hashable {}
+extension ReadID.ConsolidatedIdentityData.OptionalStatus : Swift.RawRepresentable {}
+extension ReadID.ConsolidatedIdentityData.ApprovalStatus : Swift.Equatable {}
+extension ReadID.ConsolidatedIdentityData.ApprovalStatus : Swift.Hashable {}
+extension ReadID.ConsolidatedIdentityData.ApprovalStatus : Swift.RawRepresentable {}
+extension ReadID.ConsolidatedIdentityData.SourceType : Swift.Equatable {}
+extension ReadID.ConsolidatedIdentityData.SourceType : Swift.Hashable {}
+extension ReadID.ConsolidatedIdentityData.SourceType : Swift.RawRepresentable {}
+extension ReadID.State : Swift.Equatable {}
+extension ReadID.State : Swift.Hashable {}
+extension ReadID.State : Swift.RawRepresentable {}
+extension ReadID.SessionError : Swift.Equatable {}
+extension ReadID.SessionError : Swift.Hashable {}
+extension ReadID.VerificationStatus.Verdict : Swift.Equatable {}
+extension ReadID.VerificationStatus.Verdict : Swift.Hashable {}
+extension ReadID.VerificationStatus.ReasonCode : Swift.Equatable {}
+extension ReadID.VerificationStatus.ReasonCode : Swift.Hashable {}
+extension ReadID.ExtendedLengthAPDUPreference : Swift.Equatable {}
+extension ReadID.ExtendedLengthAPDUPreference : Swift.Hashable {}
+extension ReadID.MachineReadableZoneSource : Swift.Equatable {}
+extension ReadID.MachineReadableZoneSource : Swift.Hashable {}
+extension ReadID.SessionType : Swift.Equatable {}
+extension ReadID.SessionType : Swift.Hashable {}
+extension ReadID.SessionType : Swift.RawRepresentable {}
+extension ReadID.QualityAssessment : Swift.Equatable {}
+extension ReadID.QualityAssessment : Swift.Hashable {}
+extension ReadID.MRZValidation : Swift.Equatable {}
+extension ReadID.MRZValidation : Swift.Hashable {}
+extension ReadID.MRZValidation : Swift.RawRepresentable {}
+extension ReadID.CaptureMode : Swift.Equatable {}
+extension ReadID.CaptureMode : Swift.Hashable {}
+extension ReadID.CaptureMode : Swift.RawRepresentable {}
+extension ReadID.QualityCriterionResult : Swift.Equatable {}
+extension ReadID.QualityCriterionResult : Swift.Hashable {}
+extension ReadID.QualityCriterionResult : Swift.RawRepresentable {}
+extension ReadID.FeatureRequirementResult : Swift.Equatable {}
+extension ReadID.FeatureRequirementResult : Swift.Hashable {}
+extension ReadID.FeatureRequirementResult : Swift.RawRepresentable {}
+extension ReadID.PageType : Swift.Equatable {}
+extension ReadID.PageType : Swift.Hashable {}
+extension ReadID.PageType : Swift.RawRepresentable {}
+@available(iOS 13, *)
+extension ReadID.ExtendedLengthSupport : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.ExtendedLengthSupport : Swift.Hashable {}
+@available(iOS 13, *)
+extension ReadID.ExtendedLengthSupport : Swift.RawRepresentable {}
+extension ReadID.OCRSession.MRZType : Swift.Equatable {}
+extension ReadID.OCRSession.MRZType : Swift.Hashable {}
+extension ReadID.OCRSession.MRZType : Swift.RawRepresentable {}
+extension ReadID.OnfidoResult : Swift.Equatable {}
+extension ReadID.OnfidoResult : Swift.Hashable {}
+extension ReadID.OnfidoResult : Swift.RawRepresentable {}
+extension ReadID.OnfidoCheckStatus : Swift.Equatable {}
+extension ReadID.OnfidoCheckStatus : Swift.Hashable {}
+extension ReadID.OnfidoCheckStatus : Swift.RawRepresentable {}
+extension ReadID.OnfidoReportStatus : Swift.Equatable {}
+extension ReadID.OnfidoReportStatus : Swift.Hashable {}
+extension ReadID.OnfidoReportStatus : Swift.RawRepresentable {}
+extension ReadID.Gender : Swift.Equatable {}
+extension ReadID.Gender : Swift.Hashable {}
+extension ReadID.Gender : Swift.RawRepresentable {}
+@available(iOS 13, *)
+extension ReadID.PACEAgreementTypePriority : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.PACEAgreementTypePriority : Swift.Hashable {}
+@available(iOS 13, *)
+extension ReadID.PACEMappingTypePriority : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.PACEMappingTypePriority : Swift.Hashable {}
+@available(iOS 13, *)
+extension ReadID.PACESecureMessagingTypePriority : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.PACESecureMessagingTypePriority : Swift.Hashable {}
+@available(iOS 13, *)
+extension ReadID.PACEKeyLengthPriority : Swift.Equatable {}
+@available(iOS 13, *)
+extension ReadID.PACEKeyLengthPriority : Swift.Hashable {}

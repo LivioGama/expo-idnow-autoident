@@ -1,0 +1,11 @@
+framework module ReadID {
+  umbrella header "ReadID.h"
+
+  export *
+  module * { export * }
+}
+
+module ReadID.Swift {
+  header "ReadID-Swift.h"
+  requires objc
+}

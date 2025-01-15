@@ -1,0 +1,1100 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios12.1-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ReadID_UI
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AudioToolbox
+import Combine
+import CoreGraphics
+import Foundation
+import ReadID
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import os
+public class VIZResultScreenConfiguration {
+  public var shouldShowVIZImage: Swift.Bool
+  public var shouldShowFaceImage: Swift.Bool
+  public var shouldShowQRCodeImage: Swift.Bool
+  public var shouldShowMRZImage: Swift.Bool
+  public var shouldShowMRZText: Swift.Bool
+  public var shouldShowMRZFieldImages: Swift.Bool
+  public var vizResultDataMode: ReadID_UI.VIZResultDataMode
+  public var shouldShowVIZPerformanceResult: Swift.Bool
+  public init(shouldShowVIZImage: Swift.Bool, shouldShowFaceImage: Swift.Bool, shouldShowQRCodeImage: Swift.Bool, shouldShowMRZImage: Swift.Bool, shouldShowMRZText: Swift.Bool, shouldShowMRZFieldImages: Swift.Bool, vizResultDataMode: ReadID_UI.VIZResultDataMode, shouldShowVIZPerformanceResult: Swift.Bool)
+  @objc deinit
+}
+public enum ScreenOrientation : Swift.String, Swift.CaseIterable {
+  case allowAll
+  case portraitOnly
+  case landscapeOnly
+  case inherit
+  public static var allCases: [ReadID_UI.ScreenOrientation]
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.ScreenOrientation]
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class InternalReadIDButton : UIKit.UIButton {
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var cornerRadius: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var shadowOpacity: Swift.Float {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var borderWidth: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var normalBorderColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var pressedBorderColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var selectedBorderColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var disabledBorderColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var normalTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var pressedTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var selectedTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var disabledTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var normalBackgroundColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var pressedBackgroundColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var selectedBackgroundColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var disabledBackgroundColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isSelected: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc deinit
+}
+public enum ExtendedLengthAPDUPreference : Swift.CaseIterable, Swift.CustomStringConvertible {
+  case auto
+  case disabled
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: ReadID_UI.ExtendedLengthAPDUPreference, b: ReadID_UI.ExtendedLengthAPDUPreference) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public typealias AllCases = [ReadID_UI.ExtendedLengthAPDUPreference]
+  public static var allCases: [ReadID_UI.ExtendedLengthAPDUPreference] {
+    get
+  }
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public class VIZConfirmationScreenConfiguration {
+  public var shouldShowVIZImage: Swift.Bool
+  public var shouldShowFaceImage: Swift.Bool
+  public var shouldShowQRCodeImage: Swift.Bool
+  public init(shouldShowVIZImage: Swift.Bool, shouldShowFaceImage: Swift.Bool, shouldShowQRCodeImage: Swift.Bool)
+  @objc deinit
+}
+public enum ReadIDError : Swift.Error {
+  case invalidConfiguration(msg: Swift.String)
+  case nfcNotSupported
+}
+public enum DateFormat : Swift.String {
+  case DDMMYY
+  case MMDDYY
+  case YYMMDD
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum PageType : Swift.String, Swift.CaseIterable {
+  case passportDataPageFront
+  case passportDataPageBack
+  case identityCardTD1Front
+  case identityCardTD1Back
+  case identityCardTD2Front
+  case identityCardTD2Back
+  case cnisFront
+  case cnisBack
+  case drivingLicenceFront
+  case drivingLicenceBack
+  case euDrivingLicenceFront
+  case machineReadableVisaTypeA
+  case machineReadableVisaTypeB
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.PageType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.PageType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct NFCResult {
+  public let readIDSession: ReadID.ReadIDSession?
+  public var faceImage: UIKit.UIImage? {
+    get
+  }
+  public var signatureImage: UIKit.UIImage? {
+    get
+  }
+}
+public enum ManualInputMode : Swift.String, Swift.CaseIterable {
+  case none
+  case mrzOnly
+  case canOnly
+  case all
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.ManualInputMode]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.ManualInputMode] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class VIZOnlyBothSidesFlow : ReadID_UI.VIZFlow {
+  public init()
+  public var shouldRequirePersonalNumber: Swift.Bool
+  public var allowedDocumentTypes: [ReadID_UI.DocumentType]
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ReadIDUI {
+  public typealias CompletionHandler = (ReadID_UI.ReadIDResult) -> Swift.Void
+  public static func identify(on navigationController: UIKit.UINavigationController, lastViewController: UIKit.UIViewController? = nil, flow: ReadID_UI.Flow, handler: @escaping ReadID_UI.ReadIDUI.CompletionHandler) throws
+  public static func identify(from viewController: UIKit.UIViewController, modalPresentationStyle: UIKit.UIModalPresentationStyle = .fullScreen, flow: ReadID_UI.Flow, handler: @escaping ReadID_UI.ReadIDUI.CompletionHandler) throws
+  @objc deinit
+}
+public enum ReadIDResult {
+  case success(data: ReadID_UI.ReadIDUI.SuccessValue)
+  case failure(failure: ReadID_UI.Failure, vizResult: ReadID_UI.VIZResult?)
+}
+public struct Failure : Swift.Equatable {
+  public let failureReason: ReadID_UI.FailureReason
+  public let screen: ReadID_UI.Screen?
+  public let didUserSkip: Swift.Bool?
+  public let timeOnScreen: Swift.Int?
+  public let nfcAttempts: Swift.Int
+  public static func == (a: ReadID_UI.Failure, b: ReadID_UI.Failure) -> Swift.Bool
+}
+public enum Screen : Swift.Equatable {
+  case documentSelection
+  case vizAnimation
+  case vizScan
+  case vizConfirmation
+  case vizManualInput
+  case vizResult
+  case nfcAnimation
+  case nfcRead
+  case nfcManualInput
+  case nfcResult
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ReadID_UI.Screen, b: ReadID_UI.Screen) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum FailureReason : Swift.Error, Swift.Equatable {
+  case backgroundTimeout
+  case sessionExpired
+  case authorisationError
+  case serverSessionError
+  case sslError
+  case nfcAccessControlError
+  case connectionError
+  case tooManyRequestsError
+  case nfcError
+  case userCancelled
+  case cameraPermissionDenied
+  case noChip
+  case unsupportedDocument
+  case expiredSDK
+  case backNavigation
+  case wrongDocumentType
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ReadID_UI.FailureReason, b: ReadID_UI.FailureReason) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum DocumentNFCLocation {
+  case passportFrontMiddle
+  case passportFrontLow
+  case passportInnerBackMiddle
+  case identityCardMiddle
+  case euDrivingLicenceMiddle
+  public static func == (a: ReadID_UI.DocumentNFCLocation, b: ReadID_UI.DocumentNFCLocation) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum FeatureRequirement : Swift.String {
+  case notRequired
+  case preferred
+  case required
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class NFCOnlyFlow : ReadID_UI.NFCFlow {
+  public var allowedDocumentTypes: [ReadID_UI.DocumentType]
+  public init(credentials: ReadID_UI.NFCAccessKey, documentInfo: ReadID_UI.DocumentInfo? = nil)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 13, *)
+public class NFCWithAccessControlFlow : ReadID_UI.VIZNFCFlow {
+  public var shouldCommitSessionWithoutNFC: Swift.Bool
+  public var manualInputMode: ReadID_UI.ManualInputMode
+  public init()
+  @objc deinit
+}
+public enum DataGroup : Swift.String, Swift.CaseIterable {
+  case ICAO_DG1
+  case ICAO_DG2
+  case ICAO_DG3
+  case ICAO_DG4
+  case ICAO_DG5
+  case ICAO_DG6
+  case ICAO_DG7
+  case ICAO_DG8
+  case ICAO_DG9
+  case ICAO_DG10
+  case ICAO_DG11
+  case ICAO_DG12
+  case ICAO_DG13
+  case ICAO_DG14
+  case ICAO_DG15
+  case ICAO_DG16
+  case EDL_DG1
+  case EDL_DG2
+  case EDL_DG3
+  case EDL_DG4
+  case EDL_DG5
+  case EDL_DG6
+  case EDL_DG7
+  case EDL_DG8
+  case EDL_DG9
+  case EDL_DG10
+  case EDL_DG11
+  case EDL_DG12
+  case EDL_DG13
+  case EDL_DG14
+  public static let defaulDataGroups: [ReadID_UI.DataGroup]
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.DataGroup]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.DataGroup] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class UIResources {
+  public var customBundle: Foundation.Bundle?
+  public init()
+  public func set(_ readIDColor: ReadID_UI.ReadIDColor, uiColor: UIKit.UIColor)
+  public func set(_ readIDImage: ReadID_UI.ReadIDImage, image: UIKit.UIImage)
+  public var customStringTableName: Swift.String?
+  public var language: ReadID_UI.Language?
+  public var isDynamicTypeEnabled: Swift.Bool
+  public var textSize: CoreFoundation.CGFloat
+  public var sectionHeaderTextSize: CoreFoundation.CGFloat
+  public var textFont: UIKit.UIFont?
+  public var buttonFont: UIKit.UIFont?
+  public var textFieldFont: UIKit.UIFont?
+  public var titleFont: UIKit.UIFont?
+  public var buttonHeight: CoreFoundation.CGFloat
+  public var buttonCornerRadius: CoreFoundation.CGFloat
+  public var buttonTextSize: CoreFoundation.CGFloat
+  public var buttonTextWeight: UIKit.UIFont.Weight
+  public var buttonStrokeWidth: CoreFoundation.CGFloat
+  public var buttonContentInsets: UIKit.UIEdgeInsets
+  public var buttonIconSize: CoreFoundation.CGFloat
+  public var wireframeStrokeWidth: CoreFoundation.CGFloat
+  public func styleSecondaryButton(_ button: ReadID_UI.InternalReadIDButton, styleBackground: Swift.Bool = true, setEdgeInsets: Swift.Bool = true)
+  public func styleButton(_ button: ReadID_UI.InternalReadIDButton, styleBackground: Swift.Bool = true, setEdgeInsets: Swift.Bool = true)
+  public func styleLabel(_ label: UIKit.UILabel, style: UIKit.UIFont.TextStyle = .body, font: UIKit.UIFont? = nil, textSize: CoreFoundation.CGFloat? = nil, textColor: UIKit.UIColor? = nil)
+  public func styleTitleLabel(_ label: UIKit.UILabel, style: UIKit.UIFont.TextStyle = .title1, textSize: CoreFoundation.CGFloat? = nil)
+  public func styleTextField(_ textField: UIKit.UITextField, style: UIKit.UIFont.TextStyle = .body, font: UIKit.UIFont? = nil)
+  public func styleSegmentedControl(_ segmentedControl: UIKit.UISegmentedControl)
+  @objc deinit
+}
+public protocol VIZResult {
+  var frontCaptureResult: ReadID_UI.CaptureResult? { get }
+  var backCaptureResult: ReadID_UI.CaptureResult? { get }
+  var mrzData: ReadID.MRZData? { get }
+  var nfcAccessKey: ReadID_UI.NFCAccessKey? { get }
+  var documentInfo: ReadID_UI.DocumentInfo? { get }
+  var documentType: ReadID_UI.DocumentType? { get }
+  var readIDSession: ReadID.ReadIDSession? { get }
+  var nfcChipSupport: ReadID_UI.NFCChipSupport? { get }
+}
+@_hasMissingDesignatedInitializers @available(iOS 13, *)
+public class NFCInfoProvider {
+  public typealias ChipSupportCallback = (ReadID_UI.NFCChipSupport) -> Swift.Void
+  public typealias DocumentNFCLocationCallback = (ReadID_UI.DocumentNFCLocation) -> Swift.Void
+  public static func getNFCChipSupport(nfcOnlyFlow: ReadID_UI.NFCOnlyFlow, callback: @escaping ReadID_UI.NFCInfoProvider.ChipSupportCallback) throws
+  public static func getDocumentNFCLocation(nfcOnlyFlow: ReadID_UI.NFCOnlyFlow, callback: @escaping ReadID_UI.NFCInfoProvider.DocumentNFCLocationCallback) throws
+  @objc deinit
+}
+public enum Language : Swift.String, Swift.CaseIterable {
+  case en
+  case nl
+  case es
+  case fr
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.Language]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.Language] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDImage : Swift.String {
+  case headerImage
+  case torchButtonOn
+  case torchButtonOnPressed
+  case torchButtonOff
+  case torchButtonOffPressed
+  case manualInputButton
+  case manualInputButtonPressed
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers public class NFCWithVIZFallbackFlow : ReadID_UI.VIZNFCFlow {
+  public init()
+  @objc deinit
+}
+public protocol ReadIDEventDataParameter {
+  var name: Swift.String { get }
+  var value: Swift.String { get }
+}
+public enum ReadIDEventResult : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case succeeded, cancelled, paused, failed
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventPageType : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case passportFront, passportBack, identityCardFront, identityCardBack, drivingLicenceFront, drivingLicenceBack, euDrivingLicenceFront, machineReadableVisaTypeA, machineReadableVisaTypeB
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventDocumentType : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case passport, identityCard, drivingLicence, euDrivingLicence, machineReadableVisaTypeA, machineReadableVisaTypeB
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventAnimationFinishedMethod : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case button, auto
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventNFCVerificationMethod : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case local, remote
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventVIZSecondCaptureReason : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case nfcAccessControlError
+  case skipReading
+  case noNFCChip
+  case unsupportedDocument
+  case missingMRZ
+  case noNFCSupport
+  case bothSidesFlow
+  case personalNumberRequired
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventNFCReadingFailureReason : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case nfcAccessControlError, nfcError, wrongDocumentType
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventScreen : Swift.String, ReadID_UI.ReadIDEventDataParameter {
+  case documentSelection, vizAnimation, vizScan, vizConfirmation, vizManualInput, vizPhotosResult, vizDataResult, vizPerformanceResult, mrzImage, vizFaceImage, vizImage, vizQRCodeImage, nfcAnimation, nfcStart, nfcHelp, nfcRead, nfcManualInput, nfcDataResult, nfcSecurityResult, nfcFaceImage, nfcSignatureImage
+  public var name: Swift.String {
+    get
+  }
+  public var value: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class VIZNFCFlow : ReadID_UI.Flow, ReadID_UI.VIZBaseSettings, ReadID_UI.NFCBaseSettings {
+  public var shouldShowNFCResult: Swift.Bool
+  final public let nfcResultScreenConfiguration: ReadID_UI.NFCResultScreenConfiguration
+  public var shouldReadImages: Swift.Bool
+  public var allowSkipReadingAfterAttempts: Swift.Int
+  public var accessControlOption: ReadID_UI.AccessControlOption
+  public var cscaMasterLists: [(data: Foundation.Data, certificate: Foundation.Data)]?
+  public var shouldCommitSessionWithSkipButton: Swift.Bool
+  public var extendedLengthAPDUPreference: ReadID_UI.ExtendedLengthAPDUPreference
+  public var shouldShowVIZConfirmation: Swift.Bool
+  final public let vizConfirmationScreenConfiguration: ReadID_UI.VIZConfirmationScreenConfiguration
+  public var shouldShowVIZResult: Swift.Bool
+  final public let vizResultScreenConfiguration: ReadID_UI.VIZResultScreenConfiguration
+  public var shouldPlayShutterSound: Swift.Bool
+  public var allowResumeNFCReading: Swift.Bool
+  public var allowedDataGroupsToRead: [ReadID_UI.DataGroup]?
+  public var allowedDocumentTypes: [ReadID_UI.DocumentType]
+  public var shouldShowDocumentSelection: Swift.Bool
+  public var shouldRequirePersonalNumber: Swift.Bool
+  @objc deinit
+}
+public struct DocumentInfo {
+  public let documentCode: Swift.String
+  public let issuingCountry: Swift.String
+  public let dateOfBirth: Swift.String?
+  public let dateOfExpiry: Swift.String?
+  public let edlVersion: Swift.String?
+  public init(_ documentCode: Swift.String, issuingCountry: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String)
+  public init(_ documentCode: Swift.String, issuingCountry: Swift.String, edlVersion: Swift.String)
+}
+public class NFCResultScreenConfiguration {
+  public var shouldShowFaceImage: Swift.Bool
+  public var shouldShowSignatureImage: Swift.Bool
+  public var nfcResultDataMode: ReadID_UI.NFCResultDataMode
+  public var shouldShowVerificationResult: Swift.Bool
+  public var shouldShowSecurityResult: Swift.Bool
+  public init(shouldShowFaceImage: Swift.Bool, shouldShowSignatureImage: Swift.Bool, nfcResultDataMode: ReadID_UI.NFCResultDataMode, shouldShowVerificationResult: Swift.Bool, shouldShowSecurityResult: Swift.Bool)
+  @objc deinit
+}
+public struct CaptureResult {
+  public struct Feature {
+    public enum Result {
+      case passed
+      case failed
+      case degraded
+      public static func == (a: ReadID_UI.CaptureResult.Feature.Result, b: ReadID_UI.CaptureResult.Feature.Result) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+    public let required: Swift.Bool
+    public let result: ReadID_UI.CaptureResult.Feature.Result
+    public let image: UIKit.UIImage?
+  }
+  public struct QualityCriterion {
+    public enum Result {
+      case passed
+      case failed
+      case degraded
+      case disabled
+      public static func == (a: ReadID_UI.CaptureResult.QualityCriterion.Result, b: ReadID_UI.CaptureResult.QualityCriterion.Result) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+    public let required: Swift.Bool
+    public let result: ReadID_UI.CaptureResult.QualityCriterion.Result
+  }
+  public enum CaptureMode {
+    case automatic
+    case automaticDegraded
+    case manual
+    public static func == (a: ReadID_UI.CaptureResult.CaptureMode, b: ReadID_UI.CaptureResult.CaptureMode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public struct QRCodeResult {
+    public enum QRCodeValidation {
+      case noValidation
+      case dutchBSN
+      public static func == (a: ReadID_UI.CaptureResult.QRCodeResult.QRCodeValidation, b: ReadID_UI.CaptureResult.QRCodeResult.QRCodeValidation) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+    public let validation: ReadID_UI.CaptureResult.QRCodeResult.QRCodeValidation
+    public let value: Swift.String
+  }
+  public let documentImage: UIKit.UIImage
+  public let captureMode: ReadID_UI.CaptureResult.CaptureMode
+  public let pageType: ReadID_UI.PageType?
+  public let faceImageFeature: ReadID_UI.CaptureResult.Feature?
+  public let mrzFeature: ReadID_UI.CaptureResult.Feature?
+  public let qrCodeFeature: ReadID_UI.CaptureResult.Feature?
+  public let sharpImageQualityCriterion: ReadID_UI.CaptureResult.QualityCriterion?
+  public let noGlareOnDocumentQualityCriterion: ReadID_UI.CaptureResult.QualityCriterion?
+  public let noFingerOnDocumentQualityCriterion: ReadID_UI.CaptureResult.QualityCriterion?
+  public var qrCodeResult: ReadID_UI.CaptureResult.QRCodeResult?
+}
+extension ReadID_UI.CaptureResult.Feature : Swift.Equatable {
+  public static func == (a: ReadID_UI.CaptureResult.Feature, b: ReadID_UI.CaptureResult.Feature) -> Swift.Bool
+}
+extension ReadID_UI.CaptureResult.QualityCriterion : Swift.Equatable {
+  public static func == (a: ReadID_UI.CaptureResult.QualityCriterion, b: ReadID_UI.CaptureResult.QualityCriterion) -> Swift.Bool
+}
+extension ReadID_UI.CaptureResult : Swift.Equatable {
+  public static func == (a: ReadID_UI.CaptureResult, b: ReadID_UI.CaptureResult) -> Swift.Bool
+}
+extension ReadID_UI.CaptureResult.QRCodeResult : Swift.Equatable {
+  public static func == (a: ReadID_UI.CaptureResult.QRCodeResult, b: ReadID_UI.CaptureResult.QRCodeResult) -> Swift.Bool
+}
+@available(iOS 13, *)
+extension Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum NFCAccessKey : Swift.Equatable {
+  case icao(documentType: ReadID_UI.DocumentType, documentNumber: Swift.String, dateOfBirth: Swift.String, dateOfExpiry: Swift.String)
+  case edl(mrz: Swift.String)
+  case cardAccessNumber(documentType: ReadID_UI.DocumentType, can: Swift.String)
+  public static func == (a: ReadID_UI.NFCAccessKey, b: ReadID_UI.NFCAccessKey) -> Swift.Bool
+}
+public enum NFCChipSupport {
+  case supported
+  case unsupported
+  case noNFCChip
+  case unknown
+  public static func == (a: ReadID_UI.NFCChipSupport, b: ReadID_UI.NFCChipSupport) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum NFCResultDataMode : Swift.String, Swift.CaseIterable {
+  case none
+  case simple
+  case all
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.NFCResultDataMode]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.NFCResultDataMode] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class ReadIDNavigationController : UIKit.UINavigationController {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var shouldAutorotate: Swift.Bool {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var preferredInterfaceOrientationForPresentation: UIKit.UIInterfaceOrientation {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func traitCollectionDidChange(_ previousTraitCollection: UIKit.UITraitCollection?)
+  @available(iOS 5.0, *)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(navigationBarClass: Swift.AnyClass?, toolbarClass: Swift.AnyClass?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(rootViewController: UIKit.UIViewController)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+}
+public protocol VIZBaseSettings {
+  var shouldShowDocumentSelection: Swift.Bool { get set }
+  var shouldShowVIZConfirmation: Swift.Bool { get set }
+  var vizConfirmationScreenConfiguration: ReadID_UI.VIZConfirmationScreenConfiguration { get }
+  var shouldShowVIZResult: Swift.Bool { get set }
+  var vizResultScreenConfiguration: ReadID_UI.VIZResultScreenConfiguration { get }
+  var shouldPlayShutterSound: Swift.Bool { get set }
+}
+@_hasMissingDesignatedInitializers public class Flow {
+  public var readIDSession: ReadID.ReadIDSession?
+  public var readIDTracker: ReadID_UI.ReadIDTracker?
+  public var backgroundTimeout: Foundation.TimeInterval
+  public var dateFormat: ReadID_UI.DateFormat
+  public var dateSeparator: ReadID_UI.DateSeparator
+  public var shouldMaskPersonalData: Swift.Bool
+  public var baseUrl: Swift.String
+  public var accessKey: Swift.String?
+  public var oauthToken: Swift.String?
+  public var shouldUsePinning: Swift.Bool
+  public var shouldOnlyShowInstructionsOnFirstUse: Swift.Bool
+  public var shouldAskDismissConfirmation: Swift.Bool
+  public var instructionsPlayCount: Swift.Int
+  public var shouldShowInstructionCarousel: Swift.Bool
+  public var preventSessionCommit: Swift.Bool
+  public var opaqueID: Swift.String?
+  public var uiResources: ReadID_UI.UIResources
+  public var shouldLogToConsole: Swift.Bool
+  public var applicationLevelEncryptionPins: [Swift.String]?
+  public var screenOrientation: ReadID_UI.ScreenOrientation
+  @objc deinit
+}
+extension ReadID_UI.ReadIDUI {
+  public enum SuccessValue {
+    case VIZOnly(ReadID_UI.VIZResult)
+    case VIZNFC(ReadID_UI.VIZResult, ReadID_UI.NFCResult)
+    case NFCOnly(ReadID_UI.NFCResult)
+  }
+  public static var isInternalNFCSupported: Swift.Bool {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @available(iOS 13, *)
+public class NFCWithVIZFlow : ReadID_UI.VIZNFCFlow {
+  public init()
+  public var shouldCommitSessionWithoutNFC: Swift.Bool
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class VIZFlow : ReadID_UI.Flow, ReadID_UI.VIZBaseSettings {
+  public var shouldShowDocumentSelection: Swift.Bool
+  public var shouldShowVIZConfirmation: Swift.Bool
+  final public let vizConfirmationScreenConfiguration: ReadID_UI.VIZConfirmationScreenConfiguration
+  public var shouldShowVIZResult: Swift.Bool
+  final public let vizResultScreenConfiguration: ReadID_UI.VIZResultScreenConfiguration
+  public var shouldPlayShutterSound: Swift.Bool
+  @objc deinit
+}
+public enum DateSeparator : Swift.String {
+  case hyphens
+  case strokes
+  case dots
+  case spaces
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDEventData {
+  case vizProcessStarted
+  case vizProcessFinished
+  case nfcProcessStarted
+  case nfcProcessFinished
+  case documentSelectionStarted
+  case documentSelectionFinished(ReadID_UI.ReadIDEventResult)
+  case documentSelectionClicked(ReadID_UI.ReadIDEventDocumentType)
+  case vizAnimationStarted
+  case vizAnimationFinished(ReadID_UI.ReadIDEventResult, _: ReadID_UI.ReadIDEventAnimationFinishedMethod? = nil)
+  case vizSecondCaptureReason(ReadID_UI.ReadIDEventVIZSecondCaptureReason)
+  case vizScanStarted
+  case vizScanFinished(ReadID_UI.ReadIDEventResult, _: (docType: ReadID_UI.ReadIDEventDocumentType, pageType: ReadID_UI.ReadIDEventPageType)? = nil)
+  case vizCameraPermissionGranted
+  case vizCameraPermissionDeclined
+  case vizManualInputClicked
+  case vizManualCaptureClicked
+  case vizTorchClicked
+  case vizManualInputStarted
+  case vizManualInputFinished(ReadID_UI.ReadIDEventResult)
+  case vizConfirmationStarted
+  case vizConfirmationFinished(ReadID_UI.ReadIDEventResult)
+  case vizResultStarted
+  case vizResultFinished(ReadID_UI.ReadIDEventResult)
+  case nfcManualInputStarted
+  case nfcManualInputFinished(ReadID_UI.ReadIDEventResult)
+  case nfcAnimationStarted
+  case nfcAnimationFinished(ReadID_UI.ReadIDEventResult, _: ReadID_UI.ReadIDEventAnimationFinishedMethod? = nil)
+  case nfcHelpStarted
+  case nfcHelpFinished(ReadID_UI.ReadIDEventResult)
+  case nfcStarted
+  case nfcFinished(ReadID_UI.ReadIDEventResult)
+  case nfcSkipClicked
+  case nfcCancelClicked
+  case nfcTagFound
+  case nfcReadProcessStarted
+  case nfcVerificationProcessStarted(ReadID_UI.ReadIDEventNFCVerificationMethod)
+  case nfcVerificationProcessFinished(ReadID_UI.ReadIDEventResult, ReadID_UI.ReadIDEventNFCVerificationMethod)
+  case nfcReadProcessFinished(ReadID_UI.ReadIDEventResult, _: ReadID_UI.ReadIDEventNFCReadingFailureReason? = nil)
+  case nfcResultStarted
+  case nfcResultFinished(ReadID_UI.ReadIDEventResult)
+  case screenPresented(ReadID_UI.ReadIDEventScreen, (docType: ReadID_UI.ReadIDEventDocumentType, pageType: ReadID_UI.ReadIDEventPageType)?)
+  public var parameters: [Swift.String : Swift.String] {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+}
+extension UIKit.UINavigationController {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var shouldAutorotate: Swift.Bool {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var preferredInterfaceOrientationForPresentation: UIKit.UIInterfaceOrientation {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+}
+public protocol NFCBaseSettings {
+  var shouldShowNFCResult: Swift.Bool { get set }
+  var nfcResultScreenConfiguration: ReadID_UI.NFCResultScreenConfiguration { get }
+  var shouldReadImages: Swift.Bool { get set }
+  var allowSkipReadingAfterAttempts: Swift.Int { get set }
+  var accessControlOption: ReadID_UI.AccessControlOption { get set }
+  var cscaMasterLists: [(data: Foundation.Data, certificate: Foundation.Data)]? { get set }
+  var extendedLengthAPDUPreference: ReadID_UI.ExtendedLengthAPDUPreference { get set }
+  var allowResumeNFCReading: Swift.Bool { get set }
+  var allowedDataGroupsToRead: [ReadID_UI.DataGroup]? { get set }
+}
+public protocol ReadIDTracker {
+  func trackEvent(_ event: ReadID_UI.ReadIDEvent)
+}
+@_inheritsConvenienceInitializers @available(iOS 13, *)
+public class NFCWithVIZBothSidesFlow : ReadID_UI.VIZNFCFlow {
+  public var shouldCommitSessionWithoutNFC: Swift.Bool
+  public init()
+  @objc deinit
+}
+public enum DocumentType : Swift.String, Swift.CaseIterable {
+  case passport
+  case identityCardTD1
+  case identityCardTD2
+  case cnis
+  case drivingLicence
+  case euDrivingLicence
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.DocumentType]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.DocumentType] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReadIDColor {
+  case textColor
+  case backgroundColor
+  case primaryButtonColor
+  case primaryButtonPressedColor
+  case primaryButtonDisabledColor
+  case primaryButtonTextColor
+  case primaryButtonPressedTextColor
+  case primaryButtonDisabledTextColor
+  case primaryButtonBorderColor
+  case primaryButtonPressedBorderColor
+  case primaryButtonDisabledBorderColor
+  case vizWireFrameColor
+  case sectionHeaderBackgroundColor
+  case sectionHeaderTextColor
+  case iconButtonColor
+  case iconButtonPressedColor
+  case iconButtonDisabledColor
+  case tabTextColor
+  case tabSelectedTextColor
+  case tabSelectedColor
+  case tabBackgroundColor
+  case errorColor
+  case warningColor
+  case successColor
+  case secondaryButtonColor
+  case secondaryButtonPressedColor
+  case secondaryButtonDisabledColor
+  case secondaryButtonTextColor
+  case secondaryButtonPressedTextColor
+  case secondaryButtonDisabledTextColor
+  case secondaryButtonBorderColor
+  case secondaryButtonPressedBorderColor
+  case secondaryButtonDisabledBorderColor
+  case statusTextColor
+  case statusBackgroundColor
+  case carouselIndicatorSelectedColor
+  case carouselIndicatorColor
+  case rowSeparatorColor
+  case loadingColor
+  case passportColor
+  case passportSymbolColor
+  case passportInnerPageColor
+  case passportInnerPageContentColor
+  case titleTextColor
+  case nfcTouchPointColor
+  case placeholderTextColor
+  case inputFieldBorderColor
+  case microcopyTextColor
+  public static func == (a: ReadID_UI.ReadIDColor, b: ReadID_UI.ReadIDColor) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum MRZValidation : Swift.String {
+  case none
+  case accessControl
+  case full
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct ReadIDEvent : Swift.CustomStringConvertible {
+  public let data: ReadID_UI.ReadIDEventData
+  public let timestamp: Swift.Double
+  public var description: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class NFCFlow : ReadID_UI.Flow, ReadID_UI.NFCBaseSettings {
+  public typealias CASCMasterList = [(data: Foundation.Data, certificate: Foundation.Data)]
+  public var shouldShowNFCResult: Swift.Bool
+  public var nfcResultScreenConfiguration: ReadID_UI.NFCResultScreenConfiguration
+  public var shouldReadImages: Swift.Bool
+  public var allowSkipReadingAfterAttempts: Swift.Int
+  public var accessControlOption: ReadID_UI.AccessControlOption
+  public var cscaMasterLists: ReadID_UI.NFCFlow.CASCMasterList?
+  public var shouldCommitSessionWithSkipButton: Swift.Bool
+  public var extendedLengthAPDUPreference: ReadID_UI.ExtendedLengthAPDUPreference
+  public var allowResumeNFCReading: Swift.Bool
+  public var allowedDataGroupsToRead: [ReadID_UI.DataGroup]?
+  @objc deinit
+}
+@_inheritsConvenienceInitializers public class VIZOnlyOnePageFlow : ReadID_UI.VIZFlow {
+  public init()
+  public var allowedPageTypes: [ReadID_UI.PageType]
+  public var mrzValidation: ReadID_UI.MRZValidation
+  public var manualCaptureAllowedAfterTimeout: Swift.Double
+  public var mrzFeatureRequirement: ReadID_UI.FeatureRequirement
+  public var faceImageFeatureRequirement: ReadID_UI.FeatureRequirement
+  public var qrCodeFeatureRequirement: ReadID_UI.FeatureRequirement
+  public var shouldRequireSharpImage: Swift.Bool
+  public var shouldRequireNoGlareOnDocument: Swift.Bool
+  public var shouldRequireNoFingerOnDocument: Swift.Bool
+  public var shouldAllowLoweringQualityRequirements: Swift.Bool
+  public var fastCaptureMode: Swift.Bool
+  @objc deinit
+}
+public enum AccessControlOption : Swift.String, Swift.CaseIterable {
+  case bacOnly
+  case paceOnly
+  case bacPreferred
+  case pacePreferred
+  case auto
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.AccessControlOption]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.AccessControlOption] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum VIZResultDataMode : Swift.String, Swift.CaseIterable {
+  case none
+  case accessControl
+  case advancePassengerInformation
+  case all
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [ReadID_UI.VIZResultDataMode]
+  public typealias RawValue = Swift.String
+  public static var allCases: [ReadID_UI.VIZResultDataMode] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension ReadID_UI.ScreenOrientation : Swift.Equatable {}
+extension ReadID_UI.ScreenOrientation : Swift.Hashable {}
+extension ReadID_UI.ScreenOrientation : Swift.RawRepresentable {}
+extension ReadID_UI.ExtendedLengthAPDUPreference : Swift.Equatable {}
+extension ReadID_UI.ExtendedLengthAPDUPreference : Swift.Hashable {}
+extension ReadID_UI.DateFormat : Swift.Equatable {}
+extension ReadID_UI.DateFormat : Swift.Hashable {}
+extension ReadID_UI.DateFormat : Swift.RawRepresentable {}
+extension ReadID_UI.PageType : Swift.Equatable {}
+extension ReadID_UI.PageType : Swift.Hashable {}
+extension ReadID_UI.PageType : Swift.RawRepresentable {}
+extension ReadID_UI.ManualInputMode : Swift.Equatable {}
+extension ReadID_UI.ManualInputMode : Swift.Hashable {}
+extension ReadID_UI.ManualInputMode : Swift.RawRepresentable {}
+extension ReadID_UI.Screen : Swift.Hashable {}
+extension ReadID_UI.FailureReason : Swift.Hashable {}
+extension ReadID_UI.DocumentNFCLocation : Swift.Equatable {}
+extension ReadID_UI.DocumentNFCLocation : Swift.Hashable {}
+extension ReadID_UI.FeatureRequirement : Swift.Equatable {}
+extension ReadID_UI.FeatureRequirement : Swift.Hashable {}
+extension ReadID_UI.FeatureRequirement : Swift.RawRepresentable {}
+extension ReadID_UI.DataGroup : Swift.Equatable {}
+extension ReadID_UI.DataGroup : Swift.Hashable {}
+extension ReadID_UI.DataGroup : Swift.RawRepresentable {}
+extension ReadID_UI.Language : Swift.Equatable {}
+extension ReadID_UI.Language : Swift.Hashable {}
+extension ReadID_UI.Language : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDImage : Swift.Equatable {}
+extension ReadID_UI.ReadIDImage : Swift.Hashable {}
+extension ReadID_UI.ReadIDImage : Swift.RawRepresentable {}
+extension ReadID_UI.NFCChipSupport : Swift.Equatable {}
+extension ReadID_UI.NFCChipSupport : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventResult : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventResult : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventResult : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventPageType : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventPageType : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventPageType : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventDocumentType : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventDocumentType : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventDocumentType : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventAnimationFinishedMethod : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventAnimationFinishedMethod : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventAnimationFinishedMethod : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventNFCVerificationMethod : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventNFCVerificationMethod : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventNFCVerificationMethod : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventVIZSecondCaptureReason : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventVIZSecondCaptureReason : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventVIZSecondCaptureReason : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventNFCReadingFailureReason : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventNFCReadingFailureReason : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventNFCReadingFailureReason : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDEventScreen : Swift.Equatable {}
+extension ReadID_UI.ReadIDEventScreen : Swift.Hashable {}
+extension ReadID_UI.ReadIDEventScreen : Swift.RawRepresentable {}
+extension ReadID_UI.DocumentType : Swift.Equatable {}
+extension ReadID_UI.DocumentType : Swift.Hashable {}
+extension ReadID_UI.DocumentType : Swift.RawRepresentable {}
+extension ReadID_UI.CaptureResult.Feature.Result : Swift.Equatable {}
+extension ReadID_UI.CaptureResult.Feature.Result : Swift.Hashable {}
+extension ReadID_UI.CaptureResult.QualityCriterion.Result : Swift.Equatable {}
+extension ReadID_UI.CaptureResult.QualityCriterion.Result : Swift.Hashable {}
+extension ReadID_UI.CaptureResult.CaptureMode : Swift.Equatable {}
+extension ReadID_UI.CaptureResult.CaptureMode : Swift.Hashable {}
+extension ReadID_UI.CaptureResult.QRCodeResult.QRCodeValidation : Swift.Equatable {}
+extension ReadID_UI.CaptureResult.QRCodeResult.QRCodeValidation : Swift.Hashable {}
+extension ReadID_UI.NFCResultDataMode : Swift.Equatable {}
+extension ReadID_UI.NFCResultDataMode : Swift.Hashable {}
+extension ReadID_UI.NFCResultDataMode : Swift.RawRepresentable {}
+extension ReadID_UI.DateSeparator : Swift.Equatable {}
+extension ReadID_UI.DateSeparator : Swift.Hashable {}
+extension ReadID_UI.DateSeparator : Swift.RawRepresentable {}
+extension ReadID_UI.ReadIDColor : Swift.Equatable {}
+extension ReadID_UI.ReadIDColor : Swift.Hashable {}
+extension ReadID_UI.MRZValidation : Swift.Equatable {}
+extension ReadID_UI.MRZValidation : Swift.Hashable {}
+extension ReadID_UI.MRZValidation : Swift.RawRepresentable {}
+extension ReadID_UI.AccessControlOption : Swift.Equatable {}
+extension ReadID_UI.AccessControlOption : Swift.Hashable {}
+extension ReadID_UI.AccessControlOption : Swift.RawRepresentable {}
+extension ReadID_UI.VIZResultDataMode : Swift.Equatable {}
+extension ReadID_UI.VIZResultDataMode : Swift.Hashable {}
+extension ReadID_UI.VIZResultDataMode : Swift.RawRepresentable {}

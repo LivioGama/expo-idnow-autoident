@@ -1,0 +1,4 @@
+framework module ReadID_UI {
+  header "ReadID_UI-Swift.h"
+  requires objc
+}
